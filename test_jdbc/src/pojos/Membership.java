@@ -27,13 +27,16 @@ public class Membership {
 			
 		// ADD MEMBERSHIP TYPE TO CUSTOMER TABLE
 				while (rs.next()) {
-					if (rs.equals(rs1)); // NULL FOR NOW BUT SHOULD BE ID OF CUSTOMER WHO WANTS MEMBERSHIP
+					if (rs.equals(rs1)); 
 					Statement stmt2 = con.createStatement();
 					int rs2 = stmt2.executeUpdate("INSERT INTO Membership " +
 			                   "VALUES('customerId', 'type', 'validFrom', 'validTo', 'amountpaid', 'fees')");
-				//	System.out.println(rs2.getString(1));
+				
+					//	System.out.println(rs2.getString(1));
+					
 					stmt.close();
 					stmt1.close();
+					stmt2.close();
 					con.close();
 					}
 	}
