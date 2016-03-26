@@ -16,7 +16,7 @@ public class Membership {
 	double fees;
 	private Connection con;
 
-	public static void man(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException {
 		DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
 		Connection con = DriverManager.getConnection( "jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1522:ug",
 				"ora_s4t8", "a38993127");
