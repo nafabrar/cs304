@@ -14,6 +14,7 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import pojos.Employee;
 import repository.DataAccess;
 
 public class EmployeeView extends JPanel{
@@ -85,7 +86,7 @@ public class EmployeeView extends JPanel{
 		//name starts with
 		
 		String[] 
-				attrNames = {"sin", "name", "job title", "phone number", "address", "postal Code", "email"};
+				attrNames = {"sin", "name", "job title", "phone number", "address", "postal code", "email"};
 		this.selectionField = new JComboBox<String>(attrNames);
 		this.add(selectionField);
 		this.selectionField.addActionListener(new ActionListener() {
@@ -181,13 +182,50 @@ public class EmployeeView extends JPanel{
 	}
 	
 	private void setUpResultsSpace(){
-		 model = new DefaultListModel<String>();
-	     list = new JList<String>(model);
-	     list.setFixedCellWidth(1000);
-	     for (int i = 0; i < 15; i++){
-	    	 model.addElement("Element " + i);
-	     }
-	    this.add(list);
+		//get the projected fields
+		List<String> colNames = new ArrayList<String>();
+		for(int i = 0; i < 7; i++){
+			if(checkArray[i].isSelected()){
+				colNames.add(checkArray[i].getText());
+			}
+		}
+		List<Employee> employees = DataAccess.getInstance().EmployeeDemoSelectProject(colNames, 
+				(String) selectionField.getSelectedItem(), selectionValue.getText(), 
+				isInstructor.isSelected(), isManager.isSelected());
+		String rowData[][] = new String[employees.size()][colNames.size()];
+		int numcols = 0;
+		for(int i = 0; i < employees.size(); i++){
+			for(int j = 0; j < colNames.size(); j++){
+				switch(colNames.get(i)){
+				case "sin":
+					rowData[i][j] = Integer.toString(employees.get(i).sin);
+					break;
+				case "name":
+					rowData[i][j] = employees.get(i).name;
+					break;
+				case "job title":
+					rowData[i][j] = employees.get(i).jobtitle;
+					break;
+				case "phone number":
+					rowData[i][j] = employees.get(i).phoneNumber;
+					break;
+				case "address":
+					rowData[i][j] = employees.get(i).address;
+					break;
+				case "postal code":
+					rowData[i][j] = employees.get(i).postalCode;
+					break;
+				case "email":
+					rowData[i][j] = employees.get(i).email;
+					break;
+				default:
+					rowData[i][j] = "";
+					break;
+				}
+			}
+		}
+	    JTable table = new JTable(rowData, colNames.toArray());
+	    this.add(table);
 	}
 	
 	private void UpdateQuery(){

@@ -47,7 +47,7 @@ public class DataAccess {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM employees WHERE name = "+ employeeName);
 			int employeeId = Integer.parseInt(rs.getString("employeeId"));
-			Employee emp = new Employee(employeeId);
+			Employee emp = new Employee();
 			return emp;
 		}catch (SQLException ex){
 			System.out.println("Message: " + ex.getMessage());
@@ -83,11 +83,21 @@ public class DataAccess {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query.toString());
 			//NEED TO TRANSLATE RESULT TO SET OF EMPLOYEES
+			while(rs.next())
+			{
+				Employee emp = new Employee();
+				emp.name = rs.getString("name");
+				emp.email = rs.getString("email");
+				emp.sin = rs.getInt("sin");
+				emp.jobtitle = rs.getString("jobtitle");
+				emp.phoneNumber = rs.getString("phonenumber");
+				emp.postalCode = rs.getString("postalcode");
+				matchingEmployees.add(emp);
+			}
 		}catch (SQLException ex){
 			System.out.println("Message: " + ex.getMessage());
 			return null;
 		}
-		
 		
 		return matchingEmployees;
 	}

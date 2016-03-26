@@ -1,11 +1,15 @@
 package pojos;
 
 public class Employee {
-	private int employeeId;
-	private String name;
-	private String email;
+	public int employeeId;
+	public int sin;
+	public String name;
+	public String email;
+	public String jobtitle;
+	public String phoneNumber;
+	public String address;
+	public String postalCode;
 	
-	public Employee(int id){
-		this.employeeId = id;
-	}
+	public Employee(){}
+	
 }
