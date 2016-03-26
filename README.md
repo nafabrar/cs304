@@ -6,7 +6,7 @@ Gym Database
 ```
 ssh -l f1c0b -L localhost:<LOCAL PORT TO USE>:dbhost.ugrad.cs.ubc.ca:1522 remote.ugrad.cs.ubc.ca -N
 ```
-2. Create a secrets.txt file in the project root (this won't go in the repository) with the following (and nothing else):
+2. Create a secrets.txt file in the project root (this won't go in the repository) with the following (and nothing else) all on seperate lines:
   * The local port you chose for your ssh tunnel
   * Your Oracle Username
   * Your Oracle Password
