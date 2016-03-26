@@ -57,7 +57,7 @@ public class Membership {
 		Statement stmt = con.createStatement();
 		Statement stmt1 = con.createStatement();
 		ResultSet rs = stmt.executeQuery("SELECT CustomerID FROM Customers"); // RETRIEVE CUSTOMERIDS FROM CUSTOMERS
-		ResultSet rs1 = stmt.executeQuery("Select CustomerID FROM Membership"); // RETRIEVE CUSTOMERIDS FROM MEMBERSHIP
+		ResultSet rs1 = stmt1.executeQuery("Select CustomerID FROM Membership"); // RETRIEVE CUSTOMERIDS FROM MEMBERSHIP
 			
 		// INSERT INTO MEMBERSHIP TABLE
 				while (rs.next()) {
@@ -81,24 +81,43 @@ public class Membership {
 		e.printStackTrace();
 	} }
 	
-	/*
-	public boolean cancelMembership(int CustomerId, char type, int validFrom, int validTo, double amountPaid,
-			double fees) {
-				return false	
+	
+	public void cancelMembership(int CustomerId, char type, int validFrom, int validTo, double amountPaid,
+			double fees, boolean matchedID) {
 		
+		try {
+			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+		
+			con = DriverManager.getConnection( "jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1522:ug",
+					"ora_s4t8", "a38993127");
+	 
+		Statement stmt = con.createStatement();
+		Statement stmt1 = con.createStatement();
+		
+		ResultSet rs = stmt.executeQuery("SELECT customerID FROM Customers"); // RETRIEVE CUSTOMERIDS FROM CUSTOMERS
+		
+		ResultSet rs1 = stmt1.executeQuery("SELECT CustomerID FROM Membership"); // RETRIEVE CUSTOMERIDS FROM MEMBERSHIP
+		while (rs.next()) {
+			while (rs1.next()) {
+				matchedID = (rs.getArray(customerID) == rs1.getArray(customerID ));
+				ResultSet rs2 = stmt.executeQuery("DELETE FROM Membership WHERE matchedID = 'true'");
+//				System.out.println(rs2.getString(1));
+				
+			
+			}
+			
+			
+		}
+		
+		stmt.close();
+		stmt1.close();
+		con.close();			
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 	}
 	
-	*/
-    
-	
-	/*
-      public void addMembership(int customerID, char type,int validFrom, int validTo, double amountPaid,
-    		 double fees) {
-    	  
-    	  Customers cust = new Customers(con);
-    	//  if (customerID =)
-    	  
-    	*/ 
     }
-    
+}
     
