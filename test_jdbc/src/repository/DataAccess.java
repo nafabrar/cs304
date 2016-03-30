@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pojos.Employee;
+import pojos.GymClassListItem;
 
 //for reading from the command line
 import java.io.*;
@@ -17,10 +18,18 @@ public class DataAccess {
 	 protected DataAccess() {
 	      // Exists only to defeat instantiation.
 	   }
-	 public static DataAccess getInstance() throws FileNotFoundException, IOException {
+	 public static DataAccess getInstance()  {
 	      if(instance == null) {
 	         instance = new DataAccess();
-	         instance.initialize();
+	         try {
+				instance.initialize();
+			} catch (FileNotFoundException e) {
+				System.out.println("COULD NOT CONNECT TO DB");
+				e.printStackTrace();
+			} catch (IOException e) {
+				System.out.println("COULD NOT CONNECT TO DB");
+				e.printStackTrace();
+			}
 	      }
 	      return instance;
 	 }
@@ -190,6 +199,54 @@ public class DataAccess {
 		
 		System.out.println("Employees selected" + matchingEmployees.size());
 		return matchingEmployees;
+	}
+	
+	public List<GymClassListItem> getAllClassesWithCounts() {
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(
+					"Select c.classid, c.\"size\", c.startTime, c.endTime, "
+							+ " t.name , t.description, e.name, b.streetAddress, enrolled.ec, waitlist.wl "
+							+ " FROM Class c"
+							+ " Inner Join ClassType t on c.type = t.name"
+							+ " Inner Join Employee e on c.instructor = e.sin"
+							+ " Inner Join BranchManaged b on c.branch = b.branchId"
+							+ " Left Join ("
+							+ "   select tce.classID, COUNT(*) as ec"
+							+ "   FROM CustomerTakesClass tce"
+							+ "   WHERE tce.isOnWaitList = 0 OR tce.isOnWaitList is null"
+							+ "   GROUP BY tce.classID"
+							+ " ) enrolled ON c.classid = enrolled.classID"
+							+ " Left Join ("
+							+ "   select tcw.classID, COUNT(*) as wl"
+							+ "   FROM CustomerTakesClass tcw"
+							+ "   Where tcw.isOnWaitlist > 0"
+							+ "   GROUP BY tcw.classID"
+							+ " ) waitlist ON c.classid = waitlist.classid"
+					);
+			
+			List<GymClassListItem> result = new ArrayList<GymClassListItem>();
+
+			while(rs.next()) {
+				GymClassListItem item = new GymClassListItem();
+				item.classID = rs.getInt(1);
+				item.size = rs.getInt(2);
+				item.startTime = rs.getDate(3);
+				item.endTime = rs.getDate(4);
+				item.classType = rs.getString(5);
+				item.description = rs.getString(6);
+				item.teacherName = rs.getString(7);
+				item.address = rs.getString(8);
+				item.inClass = rs.getInt(9);
+				item.inClass = rs.getInt(10);
+				
+				result.add(item);
+			}
+			return result;
+		} catch (SQLException ex){
+			System.out.println("Message: " + ex.getMessage());
+			return null;
+		}
 	}
 	
 	
