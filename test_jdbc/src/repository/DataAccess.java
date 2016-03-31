@@ -57,24 +57,28 @@ public class DataAccess {
 	
 	public List<Employee> EmployeeDemoSelectProject(List<String> projectionFields, 
 			String selectionField, String selectionValue, Boolean isInstructor, Boolean isManager){
+		
+		List<String> queryPFields = new ArrayList<String>();
+		for(int i = 0; i < projectionFields.size(); i++){
+			queryPFields.add("e." + projectionFields.get(i).replaceAll(" ",""));
+		}
 	
 		List<Employee> matchingEmployees = new ArrayList<Employee>();
 		StringBuilder query = 
-				new StringBuilder("SELECT " + String.join(",", projectionFields).replaceAll(" ","")
-						.replaceAll(",",", ") + " FROM employees e");
+				new StringBuilder("SELECT " + String.join(", ", queryPFields) + " FROM employee e");
 		if(isInstructor){
-			query.append(" INNER JOIN instructors i ON i.id = e.id");
+			query.append(" INNER JOIN instructor i ON i.sin = e.sin");
 		}
 		if(isManager){
-			query.append(" INNER JOIN managers m ON m.id = e.id");
+			query.append(" INNER JOIN manager m ON m.sin = e.sin");
 		}
 		if(!selectionValue.isEmpty()){
 			if(selectionField.equals("sin")){
-				query.append(" WHERE CAST(e.sin as VARCHAR(25)) LIKE \'%" + selectionValue + "\'");
+				query.append(" WHERE CAST(e.sin as VARCHAR(25)) LIKE \'" + selectionValue + "%\'");
 			}else{
 				selectionValue.replaceAll(" ","");
-				query.append(" WHERE UPPER(e." + selectionField.replaceAll(" ","") + ") LIKE lower(" 
-				+ selectionValue + ") || \'%\'");
+				query.append(" WHERE LOWER(e." + selectionField.replaceAll(" ","") + ") LIKE lower(\'" 
+				+ selectionValue + "\') || \'%\'");
 			}
 		}
 		
@@ -85,13 +89,37 @@ public class DataAccess {
 			//NEED TO TRANSLATE RESULT TO SET OF EMPLOYEES
 			while(rs.next())
 			{
+				
 				Employee emp = new Employee();
-				emp.name = rs.getString("name");
-				emp.email = rs.getString("email");
-				emp.sin = rs.getInt("sin");
-				emp.jobtitle = rs.getString("jobtitle");
-				emp.phoneNumber = rs.getString("phonenumber");
-				emp.postalCode = rs.getString("postalcode");
+				for(int i = 0; i < projectionFields.size(); i++){
+					switch(projectionFields.get(i)){
+						case "name":
+							emp.name = rs.getString("name");
+							break;
+						case "sin":
+							emp.sin = rs.getInt("sin");
+							break;
+						case "email address":
+							emp.email = rs.getString("emailaddress");
+							break;
+						case "job title":
+							emp.jobtitle = rs.getString("jobtitle");
+							break;
+						case "phone number":
+							emp.phoneNumber = rs.getString("phonenumber");
+							break;
+						case "postal code":
+							emp.postalCode = rs.getString("postalcode");
+							break;
+						case "street address":
+							emp.address = rs.getString("streetaddress");
+							break;
+						default:
+							System.out.println("column not found");
+							break;
+					}
+				}
+				
 				matchingEmployees.add(emp);
 			}
 		}catch (SQLException ex){
@@ -99,6 +127,7 @@ public class DataAccess {
 			return null;
 		}
 		
+		System.out.println("Employees selected" + matchingEmployees.size());
 		return matchingEmployees;
 	}
 	

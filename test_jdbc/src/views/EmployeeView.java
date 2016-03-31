@@ -2,6 +2,7 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,13 +20,12 @@ import repository.DataAccess;
 
 public class EmployeeView extends JPanel{
 	
-	private JList list;
-	private DefaultListModel model;
 	private JCheckBox[] checkArray; //for projections
 	private JComboBox selectionField; //for selections
 	private JTextField selectionValue;
 	private JCheckBox isInstructor;
 	private JCheckBox isManager;
+	private JScrollPane tableSP;
 	
 	public EmployeeView(){
 		initPanel();
@@ -40,14 +40,22 @@ public class EmployeeView extends JPanel{
 	public void initPanel() {
 		setUpCheckBoxes();
 		setUpFilters();
-		setUpResultsSpace();
+		List<String> colNames = new ArrayList<String>();
+		for(int i = 0; i < 7; i++){
+			if(checkArray[i].isSelected()){
+				colNames.add(checkArray[i].getText());
+			}
+		}
+		setUpResultsSpace(DataAccess.getInstance().EmployeeDemoSelectProject(colNames, 
+				(String) selectionField.getSelectedItem(), selectionValue.getText(), 
+				isInstructor.isSelected(), isManager.isSelected()));
     }
 	
 	private void setUpCheckBoxes(){
 		int numAttr = 7;
 		this.checkArray = new JCheckBox[numAttr];
 		String[] 
-			attrNames = {"sin", "name", "job title", "phone number", "address", "postal Code", "email"};
+			attrNames = {"sin", "name", "job title", "phone number", "street address", "postal code", "email address"};
 		JLabel projectText = new JLabel("Select possible projections for employees:");
 		projectText.setForeground(Color.DARK_GRAY);
 		projectText.setBackground(Color.GRAY);
@@ -61,16 +69,7 @@ public class EmployeeView extends JPanel{
 			this.checkArray[i].addItemListener(new ItemListener() {
 			    @Override
 			    public void itemStateChanged(ItemEvent e) {
-			        //a checkbox has changed value. need to requery
-//			    	List<String> queryOn = new ArrayList<String>();
-//			    	for(int i = 0; i < numAttr; i++){
-//			    		if(checkArray[i].isSelected()){
-//			    			queryOn.add(checkArray[i].getText());
-//			    			System.out.println(checkArray[i].getText());
-//			    		}
-//			    	}
 			    	UpdateQuery();
-			    
 			    }
 			});
 		}
@@ -86,14 +85,12 @@ public class EmployeeView extends JPanel{
 		//name starts with
 		
 		String[] 
-				attrNames = {"sin", "name", "job title", "phone number", "address", "postal code", "email"};
+				attrNames = {"sin", "name", "job title", "phone number", "street address", "postal code", "email address"};
 		this.selectionField = new JComboBox<String>(attrNames);
 		this.add(selectionField);
 		this.selectionField.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				JComboBox<String> cb = (JComboBox<String>) e.getSource();
-//		    	System.out.println(cb.getSelectedItem());
 				UpdateQuery();
 			}
 		});
@@ -109,36 +106,15 @@ public class EmployeeView extends JPanel{
 		
 		this.selectionValue.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
-			public void changedUpdate(DocumentEvent arg0) {
-//				String text;
-//				try{
-//					text = arg0.getDocument().getText(0, arg0.getDocument().getLength());
-//					System.out.println(text);
-//				}catch(Exception ex){
-//					System.out.println(ex.getMessage());
-//				}
+			public void changedUpdate(DocumentEvent arg0) {		
 				UpdateQuery();
 			}
 			@Override
 			public void insertUpdate(DocumentEvent arg0) {
-//				String text;
-//				try{
-//					text = arg0.getDocument().getText(0, arg0.getDocument().getLength());
-//					System.out.println(text);
-//				}catch(Exception ex){
-//					System.out.println(ex.getMessage());
-//				}
 				UpdateQuery();
 			}
 			@Override
-			public void removeUpdate(DocumentEvent arg0) {
-//				String text;
-//				try{
-//					text = arg0.getDocument().getText(0, arg0.getDocument().getLength());
-//					System.out.println(text);
-//				}catch(Exception ex){
-//					System.out.println(ex.getMessage());
-//				}	
+			public void removeUpdate(DocumentEvent arg0) {	
 				UpdateQuery();
 			}
 		});
@@ -146,8 +122,6 @@ public class EmployeeView extends JPanel{
 		this.selectionValue.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				JTextField tf = (JTextField) e.getSource();
-//		    	System.out.println(tf.getText());
 				UpdateQuery();
 			}
 		});
@@ -181,7 +155,7 @@ public class EmployeeView extends JPanel{
 		
 	}
 	
-	private void setUpResultsSpace(){
+	private void setUpResultsSpace(List<Employee> employees){
 		//get the projected fields
 		List<String> colNames = new ArrayList<String>();
 		for(int i = 0; i < 7; i++){
@@ -189,14 +163,10 @@ public class EmployeeView extends JPanel{
 				colNames.add(checkArray[i].getText());
 			}
 		}
-		List<Employee> employees = DataAccess.getInstance().EmployeeDemoSelectProject(colNames, 
-				(String) selectionField.getSelectedItem(), selectionValue.getText(), 
-				isInstructor.isSelected(), isManager.isSelected());
 		String rowData[][] = new String[employees.size()][colNames.size()];
-		int numcols = 0;
 		for(int i = 0; i < employees.size(); i++){
 			for(int j = 0; j < colNames.size(); j++){
-				switch(colNames.get(i)){
+				switch(colNames.get(j)){
 				case "sin":
 					rowData[i][j] = Integer.toString(employees.get(i).sin);
 					break;
@@ -209,23 +179,33 @@ public class EmployeeView extends JPanel{
 				case "phone number":
 					rowData[i][j] = employees.get(i).phoneNumber;
 					break;
-				case "address":
+				case "street address":
 					rowData[i][j] = employees.get(i).address;
 					break;
 				case "postal code":
 					rowData[i][j] = employees.get(i).postalCode;
 					break;
-				case "email":
+				case "email address":
 					rowData[i][j] = employees.get(i).email;
 					break;
 				default:
 					rowData[i][j] = "";
+					System.out.println("didn't have switch for: " + colNames.get(j));
 					break;
 				}
 			}
 		}
-	    JTable table = new JTable(rowData, colNames.toArray());
-	    this.add(table);
+		if(this.tableSP != null){
+			this.remove(this.tableSP);
+		}
+		JTable table = new JTable(rowData, colNames.toArray());
+        JScrollPane tableSP = new JScrollPane(table);
+        tableSP.setPreferredSize(new Dimension(1150, 500));
+
+        this.add(tableSP);
+        this.tableSP = tableSP; 
+        this.repaint();
+        this.revalidate();
 	}
 	
 	private void UpdateQuery(){
@@ -233,12 +213,11 @@ public class EmployeeView extends JPanel{
 		for(int i = 0; i < 7; i++){
     		if(checkArray[i].isSelected()){
     			projectionFields.add(checkArray[i].getText());
-    			System.out.println(checkArray[i].getText());
     		}
     	}
 		
-		DataAccess.getInstance().EmployeeDemoSelectProject(projectionFields, 
+		setUpResultsSpace(DataAccess.getInstance().EmployeeDemoSelectProject(projectionFields, 
 				(String) selectionField.getSelectedItem(), selectionValue.getText(), 
-				isInstructor.isSelected(), isManager.isSelected());
+				isInstructor.isSelected(), isManager.isSelected()));
 	}
 }
