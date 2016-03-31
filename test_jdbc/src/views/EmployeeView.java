@@ -34,7 +34,6 @@ public class EmployeeView extends JPanel{
 	
 	public EmployeeView(){
 		initPanel();
-		this.setVisible(true);
 	}
 	
 	/*
