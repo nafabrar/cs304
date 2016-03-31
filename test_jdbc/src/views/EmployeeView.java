@@ -20,6 +20,7 @@ import repository.DataAccess;
 
 public class EmployeeView extends JPanel{
 	
+	private DataAccess instance = null;
 	private JCheckBox[] checkArray; //for projections
 	private JComboBox selectionField1; //for selections
 	private JComboBox equalityField1;
@@ -33,6 +34,12 @@ public class EmployeeView extends JPanel{
 	private JScrollPane tableSP;
 	
 	public EmployeeView(){
+		try{
+			instance = DataAccess.getInstance();
+		}catch(Exception ex){
+			ex.printStackTrace();
+			System.exit(-1);
+		}
 		initPanel();
 	}
 	
@@ -50,7 +57,7 @@ public class EmployeeView extends JPanel{
 				colNames.add(checkArray[i].getText());
 			}
 		}
-		setUpResultsSpace(DataAccess.getInstance().EmployeeDemoSelectProject(colNames, 
+		setUpResultsSpace(instance.EmployeeDemoSelectProject(colNames, 
 				(String) selectionField1.getSelectedItem(), selectionValue1.getText(), 
 				(String) equalityField1.getSelectedItem(), (String) conjunctionField.getSelectedItem(),
 				(String) selectionField2.getSelectedItem(), selectionValue2.getText(),
@@ -267,7 +274,7 @@ public class EmployeeView extends JPanel{
     		}
     	}
 		
-		setUpResultsSpace(DataAccess.getInstance().EmployeeDemoSelectProject(projectionFields, 
+		setUpResultsSpace(instance.EmployeeDemoSelectProject(projectionFields, 
 				(String) selectionField1.getSelectedItem(), selectionValue1.getText(), 
 				(String) equalityField1.getSelectedItem(), (String) conjunctionField.getSelectedItem(),
 				(String) selectionField2.getSelectedItem(), selectionValue2.getText(),
