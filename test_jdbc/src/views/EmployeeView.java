@@ -21,8 +21,13 @@ import repository.DataAccess;
 public class EmployeeView extends JPanel{
 	
 	private JCheckBox[] checkArray; //for projections
-	private JComboBox selectionField; //for selections
-	private JTextField selectionValue;
+	private JComboBox selectionField1; //for selections
+	private JComboBox equalityField1;
+	private JComboBox conjunctionField;
+	private JComboBox selectionField2; //for selections
+	private JComboBox equalityField2;
+	private JTextField selectionValue1;
+	private JTextField selectionValue2;
 	private JCheckBox isInstructor;
 	private JCheckBox isManager;
 	private JScrollPane tableSP;
@@ -47,7 +52,10 @@ public class EmployeeView extends JPanel{
 			}
 		}
 		setUpResultsSpace(DataAccess.getInstance().EmployeeDemoSelectProject(colNames, 
-				(String) selectionField.getSelectedItem(), selectionValue.getText(), 
+				(String) selectionField1.getSelectedItem(), selectionValue1.getText(), 
+				(String) equalityField1.getSelectedItem(), (String) conjunctionField.getSelectedItem(),
+				(String) selectionField2.getSelectedItem(), selectionValue2.getText(),
+				(String) equalityField2.getSelectedItem(),
 				isInstructor.isSelected(), isManager.isSelected()));
     }
 	
@@ -86,25 +94,30 @@ public class EmployeeView extends JPanel{
 		
 		String[] 
 				attrNames = {"sin", "name", "job title", "phone number", "street address", "postal code", "email address"};
-		this.selectionField = new JComboBox<String>(attrNames);
-		this.add(selectionField);
-		this.selectionField.addActionListener(new ActionListener() {
+		this.selectionField1 = new JComboBox<String>(attrNames);
+		this.add(selectionField1);
+		this.selectionField1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				UpdateQuery();
 			}
 		});
 		
-		JLabel nameLabel = new JLabel("starts with");
-		nameLabel.setForeground(Color.DARK_GRAY);
-		nameLabel.setBackground(Color.GRAY);
-		nameLabel.setFont(new Font("Serif", Font.PLAIN, 24));
-		this.add(nameLabel);
+		String[] 
+				eqOpts = {"", "=", "<>", "starts with", "is null"};
+		this.equalityField1 = new JComboBox<String>(eqOpts);
+		this.add(equalityField1);
+		this.equalityField1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				UpdateQuery();
+			}
+		});
 		
-		this.selectionValue = new JTextField(24);
-		this.add(selectionValue);
+		this.selectionValue1 = new JTextField(24);
+		this.add(selectionValue1);
 		
-		this.selectionValue.getDocument().addDocumentListener(new DocumentListener() {
+		this.selectionValue1.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void changedUpdate(DocumentEvent arg0) {		
 				UpdateQuery();
@@ -118,14 +131,53 @@ public class EmployeeView extends JPanel{
 				UpdateQuery();
 			}
 		});
-
-		this.selectionValue.addActionListener(new ActionListener() {
+		
+		String[] 
+				comboOpts = {"", "and", "or", "and not", "or not"};
+		this.conjunctionField = new JComboBox<String>(comboOpts);
+		this.add(conjunctionField);
+		this.conjunctionField.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				UpdateQuery();
 			}
 		});
 		
+		this.selectionField2 = new JComboBox<String>(attrNames);
+		this.add(selectionField2);
+		this.selectionField2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				UpdateQuery();
+			}
+		});
+	
+		this.equalityField2 = new JComboBox<String>(eqOpts);
+		this.add(equalityField2);
+		this.equalityField2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				UpdateQuery();
+			}
+		});
+		
+		this.selectionValue2 = new JTextField(24);
+		this.add(selectionValue2);
+		
+		this.selectionValue2.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {		
+				UpdateQuery();
+			}
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				UpdateQuery();
+			}
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {	
+				UpdateQuery();
+			}
+		});
 		
 		
 		//is an instructor
@@ -217,7 +269,10 @@ public class EmployeeView extends JPanel{
     	}
 		
 		setUpResultsSpace(DataAccess.getInstance().EmployeeDemoSelectProject(projectionFields, 
-				(String) selectionField.getSelectedItem(), selectionValue.getText(), 
+				(String) selectionField1.getSelectedItem(), selectionValue1.getText(), 
+				(String) equalityField1.getSelectedItem(), (String) conjunctionField.getSelectedItem(),
+				(String) selectionField2.getSelectedItem(), selectionValue2.getText(),
+				(String) equalityField2.getSelectedItem(),
 				isInstructor.isSelected(), isManager.isSelected()));
 	}
 }

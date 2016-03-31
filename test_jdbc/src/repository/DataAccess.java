@@ -56,7 +56,9 @@ public class DataAccess {
 	}
 	
 	public List<Employee> EmployeeDemoSelectProject(List<String> projectionFields, 
-			String selectionField, String selectionValue, Boolean isInstructor, Boolean isManager){
+			String selectionField1, String selectionValue1, String eqType1, String combinator,
+			String selectionField2, String selectionValue2, String eqType2, 
+			Boolean isInstructor, Boolean isManager){
 		
 		List<String> queryPFields = new ArrayList<String>();
 		for(int i = 0; i < projectionFields.size(); i++){
@@ -72,15 +74,38 @@ public class DataAccess {
 		if(isManager){
 			query.append(" INNER JOIN manager m ON m.sin = e.sin");
 		}
-		if(!selectionValue.isEmpty()){
-			if(selectionField.equals("sin")){
-				query.append(" WHERE CAST(e.sin as VARCHAR(25)) LIKE \'" + selectionValue + "%\'");
+		if(!eqType1.isEmpty() && !selectionValue1.isEmpty()){
+			if(eqType1.equals("starts with")){
+				if(selectionField1.equals("sin")){
+					query.append(" WHERE CAST(e.sin as VARCHAR(25)) LIKE \'" + selectionValue1 + "%\'");
+				}else{
+					selectionValue1.replaceAll(" ","");
+					query.append(" WHERE LOWER(e." + selectionField1.replaceAll(" ","") + ") LIKE lower(\'" 
+					+ selectionValue1 + "\') || \'%\'");
+				}
+			}else if(eqType1.equals("is null")){
+				query.append(" WHERE e." + selectionField1 + " is NULL");
 			}else{
-				selectionValue.replaceAll(" ","");
-				query.append(" WHERE LOWER(e." + selectionField.replaceAll(" ","") + ") LIKE lower(\'" 
-				+ selectionValue + "\') || \'%\'");
+				query.append(" WHERE e." + selectionField1 + eqType1 + "\'" + selectionValue1 + "\'");
 			}
 		}
+		if(!combinator.isEmpty() && !eqType2.isEmpty() && !selectionValue2.isEmpty()){
+			query.append(" " + combinator);
+			if(eqType2.equals("starts with")){
+				if(selectionField2.equals("sin")){
+					query.append(" CAST(e.sin as VARCHAR(25)) LIKE \'" + selectionValue2 + "%\'");
+				}else{
+					selectionValue2.replaceAll(" ","");
+					query.append(" LOWER(e." + selectionField2.replaceAll(" ","") + ") LIKE lower(\'" 
+					+ selectionValue2 + "\') || \'%\'");
+				}
+			}else if(eqType1.equals("is null")){
+				query.append(" e." + selectionField2 + " is NULL");
+			}else{
+				query.append(" e." + selectionField2 + eqType2 + "\'" + selectionValue2 + "\'");
+			}
+		}
+		
 		
 		System.out.println(query.toString());
 		try{
