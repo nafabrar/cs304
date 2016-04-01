@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import pojos.DivisionResult;
 import pojos.GymClassListItem;
 import repository.DataAccess;
 
@@ -103,22 +104,22 @@ public class ClassesView extends JPanel implements ActionListener {
 		// TODO reload date fromDB
 		switch(mode) {
 		case ALL:
-			List<GymClassListItem> data = DataAccess.getInstance().getAllClassesWithCounts();
+			List<GymClassListItem> allData = DataAccess.getInstance().getAllClassesWithCounts();
 			
 			// Clear the table Model
 			tableModel.setRowCount(0);
 			tableModel.setColumnCount(0);
-			String[] cols = {"ClassID",
+			String[] allCols = {"ClassID",
 			                 "Size",
 			                 "Times",
 			                 "Class Type",
 			                 "Teacher",
 			                 "Branch"
 					};
-			tableModel.setColumnCount(cols.length);
-			tableModel.setColumnIdentifiers(cols);
-			for (GymClassListItem item: data) {
-				String[] row = new String[cols.length];
+			tableModel.setColumnCount(allCols.length);
+			tableModel.setColumnIdentifiers(allCols);
+			for (GymClassListItem item: allData) {
+				String[] row = new String[allCols.length];
 				row[0] = "" + item.classID;
 				row[1] = "" + item.size;
 				row[2] = item.classTimeAsString();
@@ -129,6 +130,25 @@ public class ClassesView extends JPanel implements ActionListener {
 			}
 			resetMaximums();
 			break;
+		case DIVIDE:
+			List<DivisionResult> divideData = DataAccess.getInstance().classesEveryoneTakes();
+			// Clear the table Model
+			tableModel.setRowCount(0);
+			tableModel.setColumnCount(0);
+			String[] divideCols = {"ClassID",
+			                 "Class Name",
+					};
+			tableModel.setColumnCount(divideCols.length);
+			tableModel.setColumnIdentifiers(divideCols);
+			for (DivisionResult item: divideData) {
+				String[] row = new String[divideCols.length];
+				row[0] = "" + item.classID;
+				row[1] = item.typeName;
+				tableModel.addRow(row);
+			}
+			resetMaximums();
+			break;
+			
 		default:
 			System.out.println("not yet implemented");
 			break;
@@ -176,6 +196,9 @@ public class ClassesView extends JPanel implements ActionListener {
 			break;
 		}
 		mode = newMode;
+		if (tableModel != null) {
+			refresh();
+		}
 	}
 
 	@Override
