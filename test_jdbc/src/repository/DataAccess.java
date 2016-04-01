@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import pojos.DivisionResult;
 import pojos.Employee;
 import pojos.GymClassListItem;
 
@@ -245,9 +246,42 @@ public class DataAccess {
 			return result;
 		} catch (SQLException ex){
 			System.out.println("Message: " + ex.getMessage());
-			return null;
+			return new ArrayList<GymClassListItem>();
 		}
 	}
 	
-	
+	// This is the division operator - it finds all classes taken by everyone
+	// There should be one in our initial data set, ClassID 6, the basic safety clas
+	public List<DivisionResult> classesEveryoneTakes() {
+		Statement stmt;
+		try {
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT UNIQUE a.ClassID, cl.Type FROM CustomerTakesClass a LEFT JOIN"
+					+ "  Class cl ON a.ClassID = cl.ClassID"
+					+ "  WHERE NOT EXISTS ("
+					+ "    SELECT customerID from"
+					+ "    Customer b"
+					+ "    WHERE NOT EXISTS (" 
+					+ "      SELECT * from CustomerTakesClass c"
+					+ "      WHERE c.ClassID = a.ClassID"
+					+ "      AND c.CustomerID = b.CustomerID"
+					+ "    )"
+					+ "  )"
+					);
+
+			List<DivisionResult> result = new ArrayList<DivisionResult>();
+			while(rs.next()) {
+				DivisionResult item = new DivisionResult();
+				item.classID = rs.getInt(1);
+				item.typeName = rs.getString(2);
+				result.add(item); //ClassID
+			}
+			return result;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ArrayList<DivisionResult>();
+		}
+	}
+
 }
