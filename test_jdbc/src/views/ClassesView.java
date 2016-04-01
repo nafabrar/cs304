@@ -2,6 +2,7 @@ package views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -9,6 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import pojos.GymClassListItem;
+import repository.DataAccess;
 
 public class ClassesView extends JPanel implements ActionListener {
 		
@@ -66,7 +70,7 @@ public class ClassesView extends JPanel implements ActionListener {
 		refreshButton = new JButton("Refresh");
 		refreshButton.addActionListener(this);
 		buttonsPane.add(refreshButton);
-		mode = ClassViewMode.CURRENT_USER;
+		mode = ClassViewMode.ALL;
 		tableLabel = new JLabel("My Classes");
 		modeButtons = new JButton[2];
 		for (int i = 0; i < 2; i++) {
@@ -81,12 +85,9 @@ public class ClassesView extends JPanel implements ActionListener {
 			System.out.println("FUCK");
 		}
 		
-		String [] colNames = {"Class Type", "Capacity", "In Class", "WaitList", "Times"};
-		tableModel = new DefaultTableModel(colNames, 0);
+		tableModel = new DefaultTableModel(0, 0);
 		classesTable = new JTable(tableModel);
-		String [] placeHolderRow = {"aType", "0", "0", "0", "Sunday 10 am - 11am"};
-		tableModel.addRow(colNames);
-		tableModel.addRow(placeHolderRow);
+		refresh();
 		tablePane.add(classesTable);
     }
 	
@@ -100,7 +101,39 @@ public class ClassesView extends JPanel implements ActionListener {
 	
 	private void refresh() {
 		// TODO reload date fromDB
-		System.out.println("Classes View: refresh");
+		switch(mode) {
+		case ALL:
+			List<GymClassListItem> data = DataAccess.getInstance().getAllClassesWithCounts();
+			
+			// Clear the table Model
+			tableModel.setRowCount(0);
+			tableModel.setColumnCount(0);
+			String[] cols = {"ClassID",
+			                 "Size",
+			                 "Times",
+			                 "Class Type",
+			                 "Teacher",
+			                 "Branch"
+					};
+			tableModel.setColumnCount(cols.length);
+			tableModel.setColumnIdentifiers(cols);
+			for (GymClassListItem item: data) {
+				String[] row = new String[cols.length];
+				row[0] = "" + item.classID;
+				row[1] = "" + item.size;
+				row[2] = item.classTimeAsString();
+				row[3] = item.classType;
+				row[4] = item.teacherName;
+				row[5] = item.address;
+				tableModel.addRow(row);
+			}
+			resetMaximums();
+			break;
+		default:
+			System.out.println("not yet implemented");
+			break;
+		}
+		
 	}
 	
 	private void changeMode(ClassViewMode newMode) {
@@ -142,6 +175,7 @@ public class ClassesView extends JPanel implements ActionListener {
 			// TODO rearrange table for Divide and load data
 			break;
 		}
+		mode = newMode;
 	}
 
 	@Override

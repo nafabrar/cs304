@@ -28,8 +28,6 @@ public class MainController extends JFrame {
 	     try {
 	    	DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
 			DataAccess dbSingleton = DataAccess.getInstance();
-		} catch (IOException e) {
-			System.exit(-1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.exit(-1);
