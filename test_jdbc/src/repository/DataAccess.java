@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import pojos.AverageWaitlistResult;
 import pojos.DivisionResult;
 import pojos.Employee;
 import pojos.GymClassListItem;
@@ -279,6 +280,38 @@ public class DataAccess {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return new ArrayList<DivisionResult>();
+		}
+	}
+	public List<AverageWaitlistResult> averageWaitlistByType() {
+		Statement stmt;
+		try {
+			stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(
+					"SELECT t.name, COALESCE(AVG(waitlist.wl), 0) "
+							+ "FROM ClassType t  "
+							+ "LEFT JOIN Class c on t.name = c.type "
+							+ "LEFT JOIN ( "
+							+ "  SELECT tcw.classID, COALESCE(COUNT(*), 0) AS wl "
+							+ "  FROM CustomerTakesClass tcw "
+							+ "  WHERE tcw.isOnWaitlist > 0 "
+							+ "  GROUP BY tcw.classID "
+							+ ") waitlist ON c.classid = waitlist.classid "
+							+ "GROUP BY t.name "
+					);
+
+			
+			List<AverageWaitlistResult> result = new ArrayList<AverageWaitlistResult>();
+			while(rs.next()) {
+				AverageWaitlistResult item = new AverageWaitlistResult();
+				item.classType = rs.getString(1);
+				item.averageWaitlist = rs.getInt(2);
+				result.add(item);
+			}
+			return result;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ArrayList<AverageWaitlistResult>();
 		}
 	}
 
