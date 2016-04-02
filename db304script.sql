@@ -24,7 +24,7 @@ CREATE TABLE ClassType(
 
 grant select on ClassType to public;
 
-CREATE TABLE membershipType(
+CREATE TABLE MembershipType(
     type Char(20),
     fees REAL,
     PRIMARY KEY(type)
@@ -32,14 +32,14 @@ CREATE TABLE membershipType(
 
 grant select on MembershipType to public;
  
-CREATE TABLE membershipDate(
+CREATE TABLE MembershipDate(
     type Char(20),
     validFrom DATE,
     validTo Date,
     PRIMARY KEY(type, validTo)
 );
 
-grant select on membershipDate to public;
+grant select on MembershipDate to public;
 
 CREATE TABLE PostalCodeLocation(
     postalCode CHAR(6),
@@ -53,17 +53,19 @@ grant select on PostalCodeLocation to public;
 CREATE TABLE Customer(
     customerID INTEGER,
     name CHAR(50),
-    phoneNumber CHAR(50) UNIQUE,
+    phoneNumber CHAR(12) UNIQUE, --CHECK (phoneNumber LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
     streetAddress CHAR(50),
-    postalCode CHAR(6) NOT NULL,
+    postalCode CHAR(6) NOT NULL, --CHECK (postalCode LIKE '[A-Y][0-9][A-Z][0-9][A-Z][0-9]'),
     emailAddress CHAR(50) UNIQUE,
     PRIMARY KEY(customerId),
-    FOREIGN KEY(postalCode) REFERENCES PostalCodeLocation(postalCode)
+    FOREIGN KEY(postalCode) REFERENCES PostalCodeLocation(postalCode),
+    CONSTRAINT phoneNumber_contraint CHECK (REGEXP_LIKE(phoneNumber,'[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]')),
+    CONSTRAINT postalCode_constraint CHECK (REGEXP_LIKE(postalCode,'[A-Y][0-9][A-Z][0-9][A-Z][0-9]'))
 );
 
 grant select on Customer to public;    
 
-CREATE TABLE Membership (
+CREATE TABLE Membership(
     type CHAR(20),
     validFrom  DATE,
     amountPaid REAL,  
@@ -179,9 +181,7 @@ SELECT 1 FROM DUAL;
 INSERT ALL
     INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Monthly', '2015-10-07', 115.00, 1)
     INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Annual', '2016-01-01', 1100.00, 2)
-    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Drop-in', '2015-12-23', 20.00, 2)
-    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Monthly', '2016-02-03', 50.00, 3)
-    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Annual', '2014-01-02', 600.00, 4)
+    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Drop-in', '2015-12-23', 20.00, 3)
 SELECT 1 FROM DUAL;
 
 
@@ -194,11 +194,9 @@ INSERT ALL
 SELECT 1 FROM DUAL;
 
 INSERT ALL
-    INTO MembershipDate(type, validFrom, ValidTo) VALUES ('Monthly', '2015-10-07', '2015-11-07')
+    INTO MembershipDate(type, validFrom, ValidTo) VALUES ('Monthly', '2015-10-07', '2015-11-08')
     INTO MembershipDate(type, validFrom, ValidTo) VALUES ('Annual', '2016-01-01', '2017-01-01')
-    INTO MembershipDate(type, validFrom, ValidTo) VALUES ('Drop-in', '2015-12-23', '2015-12-23')
-    INTO MembershipDate(type, validFrom, ValidTo) VALUES ('Monthly', '2016-02-03', '2016-03-03')
-    INTO MembershipDate(type, validFrom, ValidTo) VALUES ('Annual', '2014-01-02', '2015-01-02')
+    INTO MembershipDate(type, validFrom, ValidTo) VALUES ('Drop-in', '2015-12-23', '2015-12-29')
 SELECT 1 FROM DUAL;
  
 INSERT ALL
@@ -224,11 +222,11 @@ INSERT ALL
 SELECT 1 FROM DUAL;
 
 INSERT ALL
-    INTO Customer(customerID, name, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (1, 'Louise Lane', '6049876543', '124 Eldar st', 'V5H1Q2', 'louise.lane@gmail.com')
-    INTO Customer(customerID, name, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (2, 'Tom Carpenter', '7789034356', '125 Rocky Road', 'B7R8L9', 'tom_carpenter78@gmail.com')
-    INTO Customer(customerID, name, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (3, 'Man Ray', '6045678912', '3333 Marion Drive', 'V4K1T0', 'man.ray@hotmail.com')
-    INTO Customer(customerID, name, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (4, 'Susanne Cook', '7784531234', '4568 W Broadway', 'V4D0B4', 's.cook@gmail.com')
-    INTO Customer(customerID, name, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (5, 'Nancy Loue', '6045212343', '2123 E Broadway', 'VL9M2N', 'n.lulu@hotmail.com')
+    INTO Customer(customerID, name, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (1, 'Louise Lane','6049876543', '124 Eldar st', 'V5H1Q2', 'louise.lane@gmail.com')
+    INTO Customer(customerID, name, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (2, 'Tom Carpenter','7789034356', '125 Rocky Road', 'B7R8L9', 'tom_carpenter78@gmail.com')
+    INTO Customer(customerID, name, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (3, 'Man Ray','6045678912', '3333 Marion Drive', 'V4K1T0', 'man.ray@hotmail.com')
+    INTO Customer(customerID, name, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (4, 'Susanne Cook','7784531234', '4568 W Broadway', 'V4D0B4', 's.cook@gmail.com')
+    INTO Customer(customerID, name, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (5, 'Nancy Loue','6045212343', '2123 E Broadway', 'B5K1L5', 'n.lulu@hotmail.com')
 SELECT 1 FROM DUAL;
 
 
