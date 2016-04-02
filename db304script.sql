@@ -222,13 +222,24 @@ INSERT ALL
     INTO Customer(customerID, name, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (3, 'Man Ray','6045678912', '3333 Marion Drive', 'V4K1T0', 'man.ray@hotmail.com')
     INTO Customer(customerID, name, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (4, 'Susanne Cook','7784531234', '4568 W Broadway', 'V4D0B4', 's.cook@gmail.com')
     INTO Customer(customerID, name, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (5, 'Nancy Loue','6045212343', '2123 E Broadway', 'B5K1L5', 'n.lulu@hotmail.com')
+    INTO Customer(customerID, name, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (6, 'Ray Shark','6046669876', '123 Killarny St', 'V4K1T0', 'ray_shark57@hotmail.com')
+    INTO Customer(customerID, name, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (7, 'Max Power','7783455657', '2123 W Broadway', 'B5K1L5', 'max.power@hotmail.com')
+    INTO Customer(customerID, name, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (8, 'Roger Sterling','6049889764', '2123 E Main St', 'V4K1T0', 'roger.sterling@gmail.com')
+    INTO Customer(customerID, name, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (9, 'Donald Draper','7789327542', '2123 E Broadway', 'B5K1L5', 'd.draper@hotmail.com')
+    INTO Customer(customerID, name, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (10, 'Pete Cambel','7786041234', '27 Willow St', 'V5H1Q2', 'pete.m.cambel64@hotmail.com')
 SELECT 1 FROM DUAL;
 
 INSERT ALL
     INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Monthly', to_date('2015-10-07', 'YYYY-MM-DD'), 115.00, 1)
     INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Annual', to_date('2016-01-01', 'YYYY-MM-DD'), 1100.00, 2)
-    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Drop-in', to_date('2015-12-23', 'YYYY-MM-DD'), 20.00, 3)
+    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Drop-in', to_date('2015-12-23', 'YYYY-MM-DD'), 20.00, 4)
+    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Monthly', to_date('2015-10-07', 'YYYY-MM-DD'), 20.00, 5)
+    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Monthly', to_date('2015-10-07', 'YYYY-MM-DD')), 20.00, 6)
+    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Annual', to_date('2016-01-01', 'YYYY-MM-DD'), 20.00, 7)
+    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Annual', to_date('2016-01-01', 'YYYY-MM-DD'), 20.00, 8)
+    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Drop-in', to_date('2015-12-23', 'YYYY-MM-DD'), 20.00, 10)
 SELECT 1 FROM DUAL;
+
 
 INSERT ALL
     INTO Employee(sin, name, jobTitle, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (12345, 'Amelia Smith', 'Lead instructor', '7782222222', '#101 55 Main St', 'V5K2W1', 'amelia.smith@gmail.com')
@@ -268,33 +279,107 @@ INSERT ALL
     INTO BranchManaged(branchId, streetAddress, postalCode, phoneNumber, manager) VALUES (5, '4321 Randolph Road', 'B3S1W4', '6043567804', 97531)
 SELECT 1 FROM DUAL;
 
-
-
 INSERT ALL
-    INTO Class(classId, "size", startTime, endTime, type, instructor, branch, isFull, currentlyRun) VALUES (1, 30, to_timestamp('2016-02-10 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), to_timestamp('2016-02-10 17:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Retro Spin', 12345, 1, 0, 1)
-    INTO Class(classId, "size", startTime, endTime, type, instructor, branch, isFull, currentlyRun) VALUES (2, 15, to_timestamp('2016-02-11 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), to_timestamp('2016-02-11 19:15:00', 'YYYY-MM-DD HH24:MI:SS'), 'Yoga', 54321, 2, 1, 1)
-    INTO Class(classId, "size", startTime, endTime, type, instructor, branch, isFull, currentlyRun) VALUES (3, 20, to_timestamp('2016-02-11 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), to_timestamp('2016-02-11 19:15:00', 'YYYY-MM-DD HH24:MI:SS'), 'Yoga', 23232, 1, 0, 0)
-    INTO Class(classId, "size", startTime, endTime, type, instructor, branch, isFull, currentlyRun) VALUES (4, 30, to_timestamp('2016-02-12 06:00:00', 'YYYY-MM-DD HH24:MI:SS'), to_timestamp('2016-02-12 07:15:00', 'YYYY-MM-DD HH24:MI:SS'), 'Muay Thai', 43215, 3, 0, 1)
-    INTO Class(classId, "size", startTime, endTime, type, instructor, branch, isFull, currentlyRun) VALUES (5, 25, to_timestamp('2016-02-12 20:00:00', 'YYYY-MM-DD HH24:MI:SS'), to_timestamp('2016-02-12 21:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Dance', 43215, 2, 1, 1)
+    INTO Class(classId, "size", startTime, endTime, type, instructor, branch, isFull, currentlyRun) VALUES (1, 5, to_timestamp('2016-02-10 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), to_timestamp('2016-02-10 17:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Retro Spin', 12345, 1, 1, 1)
+    INTO Class(classId, "size", startTime, endTime, type, instructor, branch, isFull, currentlyRun) VALUES (2, 5, to_timestamp('2016-02-11 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), to_timestamp('2016-02-11 19:15:00', 'YYYY-MM-DD HH24:MI:SS'), 'Yoga', 54321, 2, 1, 1)
+    INTO Class(classId, "size", startTime, endTime, type, instructor, branch, isFull, currentlyRun) VALUES (3, 10, to_timestamp('2016-02-11 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), to_timestamp('2016-02-11 19:15:00', 'YYYY-MM-DD HH24:MI:SS'), 'Yoga', 23232, 1, 0, 0)
+    INTO Class(classId, "size", startTime, endTime, type, instructor, branch, isFull, currentlyRun) VALUES (4, 5, to_timestamp('2016-02-12 06:00:00', 'YYYY-MM-DD HH24:MI:SS'), to_timestamp('2016-02-12 07:15:00', 'YYYY-MM-DD HH24:MI:SS'), 'Muay Thai', 43215, 3, 0, 1)
+    INTO Class(classId, "size", startTime, endTime, type, instructor, branch, isFull, currentlyRun) VALUES (5, 5, to_timestamp('2016-02-12 20:00:00', 'YYYY-MM-DD HH24:MI:SS'), to_timestamp('2016-02-12 21:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Dance', 43215, 2, 1, 1)
     INTO Class(classId, "size", startTime, endTime, type, instructor, branch, isFull, currentlyRun) VALUES (6, 1000, to_timestamp('2016-02-15 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), to_timestamp('2016-02-15 10:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Basic Safety', 12345, 2, 1, 1)
+    INTO Class(classId, "size", startTime, endTime, type, instructor, branch, isFull, currentlyRun) VALUES (7, 3, to_timestamp('2016-03-10 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), to_timestamp('2016-03-10 17:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Retro Spin', 12345, 1, 1, 1)
+    INTO Class(classId, "size", startTime, endTime, type, instructor, branch, isFull, currentlyRun) VALUES (8, 5, to_timestamp('2016-03-11 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), to_timestamp('2016-03-11 19:15:00', 'YYYY-MM-DD HH24:MI:SS'), 'Yoga', 54321, 2, 1, 1)
+    INTO Class(classId, "size", startTime, endTime, type, instructor, branch, isFull, currentlyRun) VALUES (9, 3, to_timestamp('2016-03-11 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), to_timestamp('2016-03-11 19:15:00', 'YYYY-MM-DD HH24:MI:SS'), 'Yoga', 23232, 1, 1, 0)
+    INTO Class(classId, "size", startTime, endTime, type, instructor, branch, isFull, currentlyRun) VALUES (10, 5, to_timestamp('2016-03-12 06:00:00', 'YYYY-MM-DD HH24:MI:SS'), to_timestamp('2016-03-12 07:15:00', 'YYYY-MM-DD HH24:MI:SS'), 'Muay Thai', 43215, 3, 0, 1)
+    INTO Class(classId, "size", startTime, endTime, type, instructor, branch, isFull, currentlyRun) VALUES (11, 5, to_timestamp('2016-03-12 20:00:00', 'YYYY-MM-DD HH24:MI:SS'), to_timestamp('2016-03-12 21:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Dance', 43215, 2, 1, 1)
  SELECT 1 FROM DUAL;
- 
-
-
 
  
 INSERT ALL
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (1, 2, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
-    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (2, 2, to_timestamp('2016-02-07 16:00:30', 'YYYY-MM-DD HH24:MI:SS'), 0)
-    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (3, 2, to_timestamp('2016-02-07 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
-    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (4, 2, to_timestamp('2016-02-08 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
-    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (1, 4, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (2, 2, to_timestamp('2016-02-07 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (3, 2, to_timestamp('2016-02-07 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (4, 2, to_timestamp('2016-02-07 19:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (5, 2, to_timestamp('2016-02-07 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (6, 2, to_timestamp('2016-02-07 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (7, 2, to_timestamp('2016-02-07 23:15:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
+
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (3, 1, to_timestamp('2016-02-08 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (4, 1, to_timestamp('2016-02-08 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (5, 1, to_timestamp('2016-02-08 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (2, 1, to_timestamp('2016-02-08 19:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (8, 1, to_timestamp('2016-02-08 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (1, 1, to_timestamp('2016-02-08 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
+
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (3, 3, to_timestamp('2016-02-09 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (4, 3, to_timestamp('2016-02-09 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (9, 4, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (10, 4, to_timestamp('2016-02-07 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (1, 5, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (2, 5, to_timestamp('2016-02-07 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (3, 5, to_timestamp('2016-02-07 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (4, 5, to_timestamp('2016-02-07 19:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (5, 5, to_timestamp('2016-02-07 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (6, 5, to_timestamp('2016-02-07 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (7, 5, to_timestamp('2016-02-07 23:15:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (8, 5, to_timestamp('2016-02-07 23:16:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (9, 5, to_timestamp('2016-02-07 23:30:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (10, 5, to_timestamp('2016-02-07 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
+
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (1, 6, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (2, 6, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (3, 6, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (4, 6, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (5, 6, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (6, 6, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (7, 6, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (8, 6, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (9, 6, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (10, 6, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (1, 7, to_timestamp('2016-03-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (2, 7, to_timestamp('2016-03-07 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (3, 7, to_timestamp('2016-03-07 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (4, 7, to_timestamp('2016-03-07 19:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (5, 7, to_timestamp('2016-03-07 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (6, 7, to_timestamp('2016-03-07 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (7, 7, to_timestamp('2016-03-07 23:15:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
+
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (3, 8, to_timestamp('2016-03-08 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (4, 8, to_timestamp('2016-03-08 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (5, 8, to_timestamp('2016-03-08 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (2, 8, to_timestamp('2016-03-08 19:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (8, 8, to_timestamp('2016-03-08 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (1, 8, to_timestamp('2016-03-08 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (9, 8, to_timestamp('2016-03-08 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
+
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (5, 9, to_timestamp('2016-03-09 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (6, 9, to_timestamp('2016-03-09 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (3, 10, to_timestamp('2016-03-08 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (4, 10, to_timestamp('2016-03-08 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (5, 10, to_timestamp('2016-03-08 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (2, 10, to_timestamp('2016-03-08 19:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (8, 10, to_timestamp('2016-03-08 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (1, 10, to_timestamp('2016-03-08 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (9, 10, to_timestamp('2016-03-08 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
+
+
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (10, 11, to_timestamp('2016-03-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (9, 11, to_timestamp('2016-03-07 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (8, 11, to_timestamp('2016-03-07 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (7, 11, to_timestamp('2016-03-07 19:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (6, 11, to_timestamp('2016-03-07 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (5, 11, to_timestamp('2016-03-07 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (4, 11, to_timestamp('2016-03-07 23:15:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (3, 11, to_timestamp('2016-03-07 23:16:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (2, 11, to_timestamp('2016-03-07 23:30:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
+    INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (1, 11, to_timestamp('2016-03-07 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
 SELECT 1 FROM DUAL;
+ 
+
+
  
 
 
