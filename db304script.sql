@@ -106,7 +106,9 @@ grant select on Instructor to public;
 CREATE TABLE Manager(
     sin INTEGER,
     PRIMARY KEY (sin),
-    FOREIGN KEY (sin) REFERENCES employee
+    FOREIGN KEY (sin) 
+        REFERENCES employee(sin)
+        ON DELETE CASCADE
 );
 
 grant select on Manager to public;
@@ -252,6 +254,7 @@ INSERT ALL
     INTO Employee(sin, name, jobTitle, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (87654, 'Bob OHare', 'Ultra manager', '7789990876', '123 Fake st', 'B5K1L9', 'bob.ohare@goodgym.com')
     INTO Employee(sin, name, jobTitle, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (65432, 'Liam Chow', 'Regional Manager', '60498599944', '95 Templeton ave', 'B6J9L6', 'l.chow@goodgym.com')
     INTO Employee(sin, name, jobTitle, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (97531, 'Tom Collins', 'manager', '7781123432', '145 Fake St', 'B5K1L5', 'tom.collins@goodgym.com')
+    INTO Employee(sin, name, jobTitle, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (34124, 'Sarah Szevtvin', 'manager at large', '6043334545', '1245 Tolmie Blvd.', 'B5K1L5', 'ss@goodgym.com')
 SELECT 1 FROM DUAL;
 
 INSERT ALL 
