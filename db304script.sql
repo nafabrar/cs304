@@ -1,5 +1,4 @@
 
-
 --drop the tables if they exist
 DROP TABLE Membership;
 DROP TABLE MembershipType;
@@ -162,7 +161,7 @@ CREATE TABLE CustomerTakesClass(
     FOREIGN KEY (customerID) REFERENCES Customer(customerID)
     ON DELETE CASCADE,
     FOREIGN KEY (classID) REFERENCES Class(classID)
-                        	ON DELETE CASCADE
+                            ON DELETE CASCADE
 );
 
 grant select on CustomerTakesClass to public;
@@ -236,7 +235,7 @@ INSERT ALL
     INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Annual', to_date('2016-01-01', 'YYYY-MM-DD'), 1100.00, 2)
     INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Drop-in', to_date('2015-12-23', 'YYYY-MM-DD'), 20.00, 4)
     INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Monthly', to_date('2015-10-07', 'YYYY-MM-DD'), 20.00, 5)
-    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Monthly', to_date('2015-10-07', 'YYYY-MM-DD')), 20.00, 6)
+    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Monthly', to_date('2015-10-07', 'YYYY-MM-DD'), 20.00, 6)
     INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Annual', to_date('2016-01-01', 'YYYY-MM-DD'), 20.00, 7)
     INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Annual', to_date('2016-01-01', 'YYYY-MM-DD'), 20.00, 8)
     INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Drop-in', to_date('2015-12-23', 'YYYY-MM-DD'), 20.00, 10)
@@ -305,20 +304,16 @@ INSERT ALL
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (5, 2, to_timestamp('2016-02-07 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (6, 2, to_timestamp('2016-02-07 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (7, 2, to_timestamp('2016-02-07 23:15:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
-
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (3, 1, to_timestamp('2016-02-08 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (4, 1, to_timestamp('2016-02-08 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (5, 1, to_timestamp('2016-02-08 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (2, 1, to_timestamp('2016-02-08 19:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (8, 1, to_timestamp('2016-02-08 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (1, 1, to_timestamp('2016-02-08 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
-
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (3, 3, to_timestamp('2016-02-09 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (4, 3, to_timestamp('2016-02-09 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
-
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (9, 4, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (10, 4, to_timestamp('2016-02-07 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
-
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (1, 5, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (2, 5, to_timestamp('2016-02-07 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (3, 5, to_timestamp('2016-02-07 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
@@ -329,7 +324,6 @@ INSERT ALL
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (8, 5, to_timestamp('2016-02-07 23:16:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (9, 5, to_timestamp('2016-02-07 23:30:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (10, 5, to_timestamp('2016-02-07 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
-
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (1, 6, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (2, 6, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (3, 6, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
@@ -340,7 +334,6 @@ INSERT ALL
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (8, 6, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (9, 6, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (10, 6, to_timestamp('2016-02-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
-
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (1, 7, to_timestamp('2016-03-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (2, 7, to_timestamp('2016-03-07 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (3, 7, to_timestamp('2016-03-07 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
@@ -348,7 +341,6 @@ INSERT ALL
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (5, 7, to_timestamp('2016-03-07 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (6, 7, to_timestamp('2016-03-07 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (7, 7, to_timestamp('2016-03-07 23:15:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
-
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (3, 8, to_timestamp('2016-03-08 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (4, 8, to_timestamp('2016-03-08 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (5, 8, to_timestamp('2016-03-08 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
@@ -356,10 +348,8 @@ INSERT ALL
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (8, 8, to_timestamp('2016-03-08 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (1, 8, to_timestamp('2016-03-08 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (9, 8, to_timestamp('2016-03-08 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
-
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (5, 9, to_timestamp('2016-03-09 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (6, 9, to_timestamp('2016-03-09 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
-
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (3, 10, to_timestamp('2016-03-08 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (4, 10, to_timestamp('2016-03-08 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (5, 10, to_timestamp('2016-03-08 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
@@ -367,8 +357,6 @@ INSERT ALL
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (8, 10, to_timestamp('2016-03-08 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (1, 10, to_timestamp('2016-03-08 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (9, 10, to_timestamp('2016-03-08 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
-
-
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (10, 11, to_timestamp('2016-03-07 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (9, 11, to_timestamp('2016-03-07 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (8, 11, to_timestamp('2016-03-07 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 0)
@@ -381,11 +369,3 @@ INSERT ALL
     INTO CustomerTakesClass(customerID, classID, signupTime, isOnWaitlist) VALUES (1, 11, to_timestamp('2016-03-07 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 1)
 SELECT 1 FROM DUAL;
  
-
-
- 
-
-
-
-
-
