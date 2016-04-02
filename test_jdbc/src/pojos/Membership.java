@@ -99,13 +99,15 @@ public class Membership {
 		ResultSet rs1 = stmt1.executeQuery("SELECT CustomerID FROM Membership"); // RETRIEVE CUSTOMERIDS FROM MEMBERSHIP
 		while (rs.next()) {
 			while (rs1.next()) {
-				matchedID = (rs.getArray(customerID) == rs1.getArray(customerID ));
+			//	matchedID = (rs.getArray(customerID) == rs1.getArray(customerID ));
+			if (rs.getInt(1) == rs1.getInt(1)) {
+				matchedID = true;
 				ResultSet rs2 = stmt.executeQuery("DELETE FROM Membership WHERE matchedID = 'true'");
 //				System.out.println(rs2.getString(1));
 				
 			
 			}
-			
+			}
 			
 		}
 		
