@@ -77,8 +77,11 @@ public class ClassesView extends JPanel implements ActionListener {
 		for (int i = 0; i < 2; i++) {
 			modeButtons[i] = new JButton();
 			modeButtons[i].addActionListener(this);
-			buttonsPane.add(modeButtons[i]);
+			// NOTE we aren't implementing "my classes view"
+			// We need to focus on stuff that's needed for the demo
+			// buttonsPane.add(modeButtons[i]);
 		}
+		buttonsPane.add(modeButtons[0]);
 		changeMode(mode);
 		tableTitlePane.add(tableLabel);
 		resetMaximums();
@@ -114,10 +117,13 @@ public class ClassesView extends JPanel implements ActionListener {
 			                 "Times",
 			                 "Class Type",
 			                 "Teacher",
-			                 "Branch"
+			                 "Branch",
+			                 "Enrolled",
+			                 "Waitlist",
 					};
 			tableModel.setColumnCount(allCols.length);
 			tableModel.setColumnIdentifiers(allCols);
+			tableModel.addRow(allCols);
 			for (GymClassListItem item: allData) {
 				String[] row = new String[allCols.length];
 				row[0] = "" + item.classID;
@@ -126,6 +132,8 @@ public class ClassesView extends JPanel implements ActionListener {
 				row[3] = item.classType;
 				row[4] = item.teacherName;
 				row[5] = item.address;
+				row[6] = "" + item.inClass;
+				row[7] = "" + item.waitList;
 				tableModel.addRow(row);
 			}
 			resetMaximums();
@@ -174,10 +182,10 @@ public class ClassesView extends JPanel implements ActionListener {
 			tableLabel.setText("All Classes");
 			mode = ClassViewMode.ALL;
 			allClassesButton = null;
-			modeButtons[0].setText("My Classes");
-			currentUserButton = modeButtons[0];
-			modeButtons[1].setText("Classes Everyone takes");
-			divideButton = modeButtons[1];
+			modeButtons[0].setText("Classes Everyone takes");
+			divideButton = modeButtons[0];
+			modeButtons[1].setText("My Classes");
+			currentUserButton = modeButtons[1];
 			resetMaximums();
 
 			// TODO rearrange table for All Classes and load data
@@ -186,10 +194,10 @@ public class ClassesView extends JPanel implements ActionListener {
 			tableLabel.setText("Classes Everyone takes");
 			mode = ClassViewMode.DIVIDE;
 			divideButton = null;
-			modeButtons[0].setText("My Classes");
-			currentUserButton = modeButtons[0];
-			modeButtons[1].setText("All Classes");
-			allClassesButton = modeButtons[1];
+			modeButtons[0].setText("All Classes");
+			allClassesButton = modeButtons[0];
+			modeButtons[1].setText("My Classes");
+			currentUserButton = modeButtons[1];
 			resetMaximums();
 			
 			// TODO rearrange table for Divide and load data
