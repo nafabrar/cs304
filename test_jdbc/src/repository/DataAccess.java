@@ -125,14 +125,13 @@ public class DataAccess {
 				if(selectionField1.equals("sin")){
 					query.append(" WHERE CAST(e.sin as VARCHAR(25)) LIKE \'" + selectionValue1 + "%\'");
 				}else{
-					selectionValue1.replaceAll(" ","");
 					query.append(" WHERE LOWER(e." + selectionField1.replaceAll(" ","") + ") LIKE lower(\'" 
 					+ selectionValue1 + "\') || \'%\'");
 				}
 			}else if(eqType1.equals("is null")){
-				query.append(" WHERE e." + selectionField1 + " is NULL");
+				query.append(" WHERE e." + selectionField1.replaceAll(" ","") + " is NULL");
 			}else{
-				query.append(" WHERE e." + selectionField1 + eqType1 + "\'" + selectionValue1 + "\'");
+				query.append(" WHERE e." + selectionField1.replaceAll(" ","") + eqType1 + "\'" + selectionValue1 + "\'");
 			}
 		}
 		if(!combinator.isEmpty() && !eqType2.isEmpty() && !selectionValue2.isEmpty()){
@@ -141,14 +140,13 @@ public class DataAccess {
 				if(selectionField2.equals("sin")){
 					query.append(" CAST(e.sin as VARCHAR(25)) LIKE \'" + selectionValue2 + "%\'");
 				}else{
-					selectionValue2.replaceAll(" ","");
 					query.append(" LOWER(e." + selectionField2.replaceAll(" ","") + ") LIKE lower(\'" 
 					+ selectionValue2 + "\') || \'%\'");
 				}
 			}else if(eqType1.equals("is null")){
-				query.append(" e." + selectionField2 + " is NULL");
+				query.append(" e." + selectionField2.replaceAll(" ","") + " is NULL");
 			}else{
-				query.append(" e." + selectionField2 + eqType2 + "\'" + selectionValue2 + "\'");
+				query.append(" e." + selectionField2.replaceAll(" ","") + eqType2 + "\'" + selectionValue2 + "\'");
 			}
 		}
 		

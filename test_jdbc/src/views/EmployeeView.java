@@ -110,7 +110,7 @@ public class EmployeeView extends JPanel{
 		});
 		
 		String[] 
-				eqOpts = {"", "=", "<>", "starts with", "is null"};
+				eqOpts = {"", "=", "!=", "starts with", "is null"};
 		this.equalityField1 = new JComboBox<String>(eqOpts);
 		this.add(equalityField1);
 		this.equalityField1.addActionListener(new ActionListener() {
