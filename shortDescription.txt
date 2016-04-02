@@ -1,0 +1,24 @@
+What the project accomplished
+=============================
+
+We created a working application that supports several kinds of queries and updates on a schema that is very close to
+what we planned in our initial requirements. In many ways it's similar to what a working business would need.
+
+We did not end up supporting all of the actions described in our requirements, because we had to add actions that were not
+in our requirements to satisfy what we were asked to do for the demo. We hadn't really planned on doing a division operation,
+for example, so the one that we implemented was a somewhat contrived example (but it is correct).
+
+We had to do a lot of work to work around the limitations of SQL
+
+Schema differences
+==================
+Our schema didn't change all that much.
+
+We discovered that SQLPlus is very error-prone when using dates as primary keys so we added an integer as an integer primary
+key to the MembershipDate table.
+
+Because there's no particular data type for time of day in SQLPlus, we encoded class start and end times as timestamps. This made
+an additional day of week field irrelevant, since timestamps can encode that information.
+
+We did not change any functional dependencies from our plan, so our original discussion of them from part 2 still applies.
+
