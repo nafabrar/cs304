@@ -176,6 +176,14 @@ INSERT ALL
     INTO ClassType(name, description) VALUES ('Basic Safety', 'A required Safety Course that everyone must take')
 SELECT 1 FROM DUAL;
 
+INSERT ALL
+    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Monthly', '2015-10-07', 115.00, 1)
+    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Annual', '2016-01-01', 1100.00, 2)
+    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Drop-in', '2015-12-23', 20.00, 2)
+    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Monthly', '2016-02-03', 50.00, 3)
+    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Annual', '2014-01-02', 600.00, 4)
+SELECT 1 FROM DUAL;
+
 
 INSERT ALL
     INTO MembershipType(type, fees) VALUES ('Monthly', 115.00)
