@@ -61,6 +61,7 @@ public class Membership {
 			
 		// INSERT INTO MEMBERSHIP TABLE
 				while (rs.next()) {
+					while (rs1.next()) {
 					if (rs.equals(rs1)); 
 					Statement stmt2 = con.createStatement();
 					int rs2 = stmt2.executeUpdate("INSERT INTO Membership " +
@@ -74,7 +75,7 @@ public class Membership {
 					con.close();
 					
 					}
-			
+				}
 	
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
