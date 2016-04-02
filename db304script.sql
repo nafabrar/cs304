@@ -3,7 +3,7 @@
 --drop the tables if they exist
 DROP TABLE Membership;
 DROP TABLE MembershipType;
-DROP TABLE MembershipDates;
+DROP TABLE MembershipDate;
 DROP TABLE CustomerTakesClass;
 DROP TABLE Class;
 DROP TABLE ClassType;
