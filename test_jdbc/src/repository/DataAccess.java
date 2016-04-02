@@ -282,37 +282,55 @@ public class DataAccess {
 			return new ArrayList<DivisionResult>();
 		}
 	}
-	public List<AverageWaitlistResult> averageWaitlistByType() {
+	
+	/*
+	 *  Select the class type with the minimum or maximum waitlist size
+	 *  @param doMin: true if it should select the min, otherwise it should select max
+	 */
+	public AverageWaitlistResult averageWaitlistMinORMax(boolean doMin) {
 		Statement stmt;
 		try {
 			stmt = con.createStatement();
+			String desc = " DESC ";
+			if (doMin) {
+				desc = " ASC ";
+			}
+
 			ResultSet rs = stmt.executeQuery(
-					"SELECT t.name, COALESCE(AVG(waitlist.wl), 0) "
-							+ "FROM ClassType t  "
-							+ "LEFT JOIN Class c on t.name = c.type "
-							+ "LEFT JOIN ( "
-							+ "  SELECT tcw.classID, COALESCE(COUNT(*), 0) AS wl "
-							+ "  FROM CustomerTakesClass tcw "
-							+ "  WHERE tcw.isOnWaitlist > 0 "
-							+ "  GROUP BY tcw.classID "
-							+ ") waitlist ON c.classid = waitlist.classid "
-							+ "GROUP BY t.name "
+						"SELECT tname, avg FROM ( "
+						+ " SELECT t.name as tname, (COALESCE(AVG(waitlist.wl), 0)) as avg "
+							+ "  FROM ClassType t  "
+							+ "  LEFT JOIN Class c on t.name = c.type "
+							+ "  LEFT JOIN ( "
+							+ "    SELECT tcw.classID, COALESCE(COUNT(*), 0) AS wl "
+							+ "    FROM CustomerTakesClass tcw "
+							+ "    WHERE tcw.isOnWaitlist > 0 "
+							+ "    GROUP BY tcw.classID "
+							+ "  ) waitlist ON c.classid = waitlist.classid "
+							+ "  GROUP BY t.name "
+							+ " ORDER BY avg" + desc
+							+ ") "
+							+ " WHERE ROWNUM = 1"
 					);
 
 			
-			List<AverageWaitlistResult> result = new ArrayList<AverageWaitlistResult>();
-			while(rs.next()) {
-				AverageWaitlistResult item = new AverageWaitlistResult();
-				item.classType = rs.getString(1);
-				item.averageWaitlist = rs.getInt(2);
-				result.add(item);
+			AverageWaitlistResult result = new AverageWaitlistResult();
+			result.classType = "";
+			result.averageWaitlist = 0;
+			if (rs.next()) {
+				result.classType = rs.getString(1);
+				result.averageWaitlist = rs.getInt(2);
 			}
 			return result;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return new ArrayList<AverageWaitlistResult>();
+			AverageWaitlistResult result = new AverageWaitlistResult();
+			result.classType = "";
+			result.averageWaitlist = 0;
+			return result;
 		}
 	}
+
 
 }

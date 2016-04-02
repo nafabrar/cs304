@@ -117,19 +117,19 @@ public class ClassesView extends JPanel implements ActionListener {
 		switch(mode) {
 		case ALL:
 			List<GymClassListItem> allData = DataAccess.getInstance().getAllClassesWithCounts();
-			
+
 			// Clear the table Model
 			tableModel.setRowCount(0);
 			tableModel.setColumnCount(0);
 			String[] allCols = {"ClassID",
-			                 "Size",
-			                 "Times",
-			                 "Class Type",
-			                 "Teacher",
-			                 "Branch",
-			                 "Enrolled",
-			                 "Waitlist",
-					};
+					"Size",
+					"Times",
+					"Class Type",
+					"Teacher",
+					"Branch",
+					"Enrolled",
+					"Waitlist",
+			};
 			tableModel.setColumnCount(allCols.length);
 			tableModel.setColumnIdentifiers(allCols);
 			for (GymClassListItem item: allData) {
@@ -152,8 +152,8 @@ public class ClassesView extends JPanel implements ActionListener {
 			tableModel.setRowCount(0);
 			tableModel.setColumnCount(0);
 			String[] divideCols = {"ClassID",
-			                 "Class Name",
-					};
+					"Class Name",
+			};
 			tableModel.setColumnCount(divideCols.length);
 			tableModel.setColumnIdentifiers(divideCols);
 			for (DivisionResult item: divideData) {
@@ -165,28 +165,31 @@ public class ClassesView extends JPanel implements ActionListener {
 			resetMaximums();
 			break;
 		case WAITLIST:
-			List<AverageWaitlistResult> wlData = DataAccess.getInstance().averageWaitlistByType();
+			//List<AverageWaitlistResult> wlData = DataAccess.getInstance().averageWaitlistByType();
+			AverageWaitlistResult maxWL = DataAccess.getInstance().averageWaitlistMinORMax(false);
+			AverageWaitlistResult minWL = DataAccess.getInstance().averageWaitlistMinORMax(true);
+
 			tableModel.setRowCount(0);
 			tableModel.setColumnCount(0);	
-			String[] waitlistCols = {"Class Type",
-	                 "Average Wait List",
+			String[] waitlistCols = {"MIN/MAX",
+					"Class Type",
+					"Average Wait List",
 			};
 			tableModel.setColumnCount(waitlistCols.length);
 			tableModel.setColumnIdentifiers(waitlistCols);
-			for (AverageWaitlistResult wr: wlData) {
-				String[] row = new String[waitlistCols.length];
-				row[0] = wr.classType;
-				row[1] = "" + wr.averageWaitlist;
-				tableModel.addRow(row);
-			}
+			String[] row = new String[waitlistCols.length];
+			row[0] = "MAX";
+			row[1] = maxWL.classType;
+			row[2] = "" + maxWL.averageWaitlist;
+			tableModel.addRow(row);
+			row = new String[waitlistCols.length];
+			row[0] = "MIN";
+			row[1] = minWL.classType;
+			row[2] = "" + minWL.averageWaitlist;
+			tableModel.addRow(row);
 			resetMaximums();
 			break;
-			
-			
-		default:
-			break;
-		}
-		
+		}	
 	}
 	
 	private void changeMode(ClassViewMode newMode) {
