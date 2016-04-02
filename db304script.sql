@@ -36,7 +36,7 @@ CREATE TABLE MembershipDate(
     type Char(20),
     validFrom DATE,
     validTo Date,
-    PRIMARY KEY(type, validTo)
+    PRIMARY KEY(type, validFrom)
 );
 
 grant select on MembershipDate to public;
@@ -178,11 +178,6 @@ INSERT ALL
     INTO ClassType(name, description) VALUES ('Basic Safety', 'A required Safety Course that everyone must take')
 SELECT 1 FROM DUAL;
 
-INSERT ALL
-    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Monthly', '2015-10-07', 115.00, 1)
-    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Annual', '2016-01-01', 1100.00, 2)
-    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Drop-in', '2015-12-23', 20.00, 3)
-SELECT 1 FROM DUAL;
 
 
 INSERT ALL
@@ -194,9 +189,9 @@ INSERT ALL
 SELECT 1 FROM DUAL;
 
 INSERT ALL
-    INTO MembershipDate(type, validFrom, ValidTo) VALUES ('Monthly', '2015-10-07', '2015-11-08')
-    INTO MembershipDate(type, validFrom, ValidTo) VALUES ('Annual', '2016-01-01', '2017-01-01')
-    INTO MembershipDate(type, validFrom, ValidTo) VALUES ('Drop-in', '2015-12-23', '2015-12-29')
+    INTO MembershipDate(type, validFrom, ValidTo) VALUES ('Monthly', to_date('2015-10-07', 'YYYY-MM-DD'), '2015-11-08')
+    INTO MembershipDate(type, validFrom, ValidTo) VALUES ('Annual', to_date('2016-01-01', 'YYYY-MM-DD'), '2017-01-01')
+    INTO MembershipDate(type, validFrom, ValidTo) VALUES ('Drop-in', to_date('2015-12-23', 'YYYY-MM-DD'), '2015-12-29')
 SELECT 1 FROM DUAL;
  
 INSERT ALL
@@ -229,6 +224,11 @@ INSERT ALL
     INTO Customer(customerID, name, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (5, 'Nancy Loue','6045212343', '2123 E Broadway', 'B5K1L5', 'n.lulu@hotmail.com')
 SELECT 1 FROM DUAL;
 
+INSERT ALL
+    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Monthly', to_date('2015-10-07', 'YYYY-MM-DD'), 115.00, 1)
+    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Annual', to_date('2016-01-01', 'YYYY-MM-DD'), 1100.00, 2)
+    INTO Membership(type, validFrom, amountPaid, customerID) VALUES ('Drop-in', to_date('2015-12-23', 'YYYY-MM-DD'), 20.00, 3)
+SELECT 1 FROM DUAL;
 
 INSERT ALL
     INTO Employee(sin, name, jobTitle, phoneNumber, streetAddress, postalCode, emailAddress) VALUES (12345, 'Amelia Smith', 'Lead instructor', '7782222222', '#101 55 Main St', 'V5K2W1', 'amelia.smith@gmail.com')
