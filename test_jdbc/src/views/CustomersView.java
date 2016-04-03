@@ -160,7 +160,7 @@ private void signup(){
 				if(instance.signup(Integer.parseInt(cid.getText()), name.getText(), phone.getText(), 
 						sAddress.getText(), pCode.getText(), email.getText())){
 					JOptionPane.showMessageDialog(null, "Registered"); 
-					panel2.setVisible(false);
+					frame2.dispose();
 				}else{
 					JOptionPane.showMessageDialog(null, "Failed. "
 							+ "Try a different cid and make sure you've entered a valid phone number and postal code"); 
