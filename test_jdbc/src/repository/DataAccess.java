@@ -95,6 +95,7 @@ public class DataAccess {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM employees WHERE name = "+ employeeName);
 			int employeeId = Integer.parseInt(rs.getString("employeeId"));
 			Employee emp = new Employee();
+			emp.employeeId = employeeId;
 			return emp;
 		}catch (SQLException ex){
 			System.out.println("Message: " + ex.getMessage());

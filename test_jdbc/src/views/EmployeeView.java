@@ -1,6 +1,5 @@
 package views;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -11,7 +10,13 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -20,13 +25,17 @@ import repository.DataAccess;
 
 public class EmployeeView extends JPanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private DataAccess instance = null;
 	private JCheckBox[] checkArray; //for projections
-	private JComboBox selectionField1; //for selections
-	private JComboBox equalityField1;
-	private JComboBox conjunctionField;
-	private JComboBox selectionField2; //for selections
-	private JComboBox equalityField2;
+	private JComboBox<String> selectionField1; //for selections
+	private JComboBox<String> equalityField1;
+	private JComboBox<String> conjunctionField;
+	private JComboBox<String> selectionField2; //for selections
+	private JComboBox<String> equalityField2;
 	private JTextField selectionValue1;
 	private JTextField selectionValue2;
 	private JCheckBox isInstructor;
