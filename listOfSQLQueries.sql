@@ -12,6 +12,7 @@ SELECT * FROM employees WHERE name = ?;
 Employee Selection/Projection query
 This query is built up in java based on user choices and is quite complex. It allows a user to select
 specific fields from the employee table, and check whether they match specific patterns.
+The logic that constructs it is fairly complex
 Please see the EmployeeDemoSelectProject method in DataAccess.java
  */
 
@@ -43,6 +44,7 @@ Select c.classid, c."size", c.startTime, c.endTime,
   This selects all classes taken by everybody
   It's a bit artificial (I'm not sure that a gym would actually have any such clases in real life) but it was
   required for the demo
+  It uses the double negative technique to implement relational division in SQL
 */
 SELECT UNIQUE a.ClassID, cl.Type FROM CustomerTakesClass a LEFT JOIN
 Class cl ON a.ClassID = cl.ClassID
