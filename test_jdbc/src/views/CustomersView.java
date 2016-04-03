@@ -80,7 +80,7 @@ public class CustomersView extends JPanel {
 			thehandler handler = new thehandler();
 			
 			signup.addActionListener(handler);
-			login.addActionListener( handler);
+			login.addActionListener(handler);
 			
 			JPanel panelA = new JPanel();
 			panelA.setLayout(new BoxLayout(panelA,BoxLayout.Y_AXIS));

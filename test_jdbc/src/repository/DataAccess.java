@@ -178,48 +178,35 @@ public class DataAccess {
 	
 	
 	public String login(int cid) {
-		
+
 		ResultSet  rs;
 		PreparedStatement  ps;
 
 		try
 		{
-			ps = con.prepareStatement("SELECT C.name, X.classid FROM Customer C,CustomerTakesClass X WHERE C.customerID = X.customerID AND C.customerID = ?");
-			//int employeeId = Integer.parseInt(rs.getString("employeeId"));
-
+			ps = con.prepareStatement("SELECT C.name, X.classid FROM Customer C LEFT JOIN CustomerTakesClass X ON C.CustomerID = X.CustomerID " +
+							"WHERE C.customerId = ?");
 			ps.setInt(1, cid);
-		
-			
-	ResultSet srs = ps.executeQuery();
-	   List<String> someList = new ArrayList<String>();
-       List<String> itemsToAdd = new ArrayList<String>();
-       
-			if(srs.next()){
-				String cname = srs.getString(1);
-		        int classid = Integer.parseInt(srs.getString(2));
-		        String cids = Integer.toString(classid);
-		        System.out.println(cname + "     " + cids);
-		        
-		        itemsToAdd.add(cname);
-		        itemsToAdd.add(cids);
-		        someList.addAll(itemsToAdd);
-		        return cname + cids;
-			}
-		   
 
-			//StringBuilder listString = new StringBuilder();
-			//return someList.toString();
-			//for (String s : someList)
-			  //   listString.append(s+" ");
-			//return listString.toString();
-			
+
+			ResultSet srs = ps.executeQuery();
+			List<Integer> classIds = new ArrayList<Integer>();
+			String cname = null;
+			while (srs.next()){
+				cname = srs.getString(1);
+				int classId = srs.getInt(2);
+				classIds.add(classId);
+			}
+			if (cname != null) {
+				return cname + classIds.toString();
+			}
 		}	
-		
-		catch (SQLException ex)
-		{
+		catch (SQLException ex) {
 			System.out.println("Could not login: " + ex.getMessage());
+			return ex.getMessage();
 		}
-		return null;}
+		return "Could not find customer with ID " + cid;
+	}
 
 	public String Updatecustomer(String name,String phone,String address,String pc,String email,int cid){
 		try{
