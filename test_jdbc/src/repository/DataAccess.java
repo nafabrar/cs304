@@ -231,7 +231,8 @@ public class DataAccess {
 		String npostalcode;
 		String nphone2;
 		
-		ps = con.prepareStatement("update Customer set name = ?,phoneNumber = ?,streetAddress = ?,postalCode = ?,emailAddress = ? where customerID = ?");
+		ps = con.prepareStatement("update Customer set name = ?,phoneNumber = ?,streetAddress = ?,"
+				+ "postalCode = ?,emailAddress = ? where customerID = ?");
 		 ps.setString(1,name );
 		 ps.setString(2, phone);
 		 ps.setString(3, address);
@@ -239,15 +240,8 @@ public class DataAccess {
 		 ps.setString(5, email);
 		 ps.setInt(6, cid);
 
-		rs1 = ps.executeQuery();
-		 
-		newname = rs1.getString(2);
-		ph = (rs1.getString(3));
-		naddress = rs1.getString(4);
-		npostalcode = rs1.getString(5);
-		cid = Integer.parseInt(rs1.getString(6));
-		nphone2 = (rs1.getString(3));
-		return newname + nphone2 + naddress +npostalcode;
+		int updated = ps.executeUpdate();
+		return ("" + updated + " rows updated");
 	
 }
 		catch (SQLException ex){
