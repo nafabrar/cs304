@@ -221,33 +221,33 @@ public class DataAccess {
 		return null;}
 
 	public String Updatecustomer(String name,String phone,String address,String pc,String email,int cid){
-	try{
-		PreparedStatement ps;
-		ResultSet rs1;
-		String ph;
-		String newname;
-		String nphone;
-		String naddress;
-		String npostalcode;
-		String nphone2;
-		
-		ps = con.prepareStatement("update Customer set name = ?,phoneNumber = ?,streetAddress = ?,"
-				+ "postalCode = ?,emailAddress = ? where customerID = ?");
-		 ps.setString(1,name );
-		 ps.setString(2, phone);
-		 ps.setString(3, address);
-		 ps.setString(4, pc);
-		 ps.setString(5, email);
-		 ps.setInt(6, cid);
+		try{
+			PreparedStatement ps;
+			ResultSet rs1;
+			String ph;
+			String newname;
+			String nphone;
+			String naddress;
+			String npostalcode;
+			String nphone2;
 
-		int updated = ps.executeUpdate();
-		return ("" + updated + " rows updated");
-	
-}
-		catch (SQLException ex){
-			System.out.println("Message: " + ex.getMessage());
-			return null;}
+			ps = con.prepareStatement("update Customer set name = ?,phoneNumber = ?,streetAddress = ?,"
+					+ "postalCode = ?,emailAddress = ? where customerID = ?");
+			ps.setString(1,name );
+			ps.setString(2, phone);
+			ps.setString(3, address);
+			ps.setString(4, pc);
+			ps.setString(5, email);
+			ps.setInt(6, cid);
+
+			int updated = ps.executeUpdate();
+			return ("" + updated + " rows updated");
+
 		}
+		catch (SQLException ex){
+			return "Error: " + ex.getMessage();
+		}
+	}
 	
 	
 	public String deleteCustomer(int cid,int clid){
