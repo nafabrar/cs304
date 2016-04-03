@@ -115,8 +115,6 @@ public void info(int cid){
 	
 }			
 private void signup(){
-	  //signup.setText("Signinup!");
-	  String	string = " ";
 	  System.out.println("Button clicked");
 	  
 	  //TO Signup form
@@ -125,9 +123,7 @@ private void signup(){
 
 	    JTextField cid = new JTextField("Enter cid");
 	    
-	    JTextField classid = new JTextField("Enter classid");
-
-	    JTextField name = new JTextField("Enter class name");
+	    JTextField name = new JTextField("Enter name");
 	    JTextField phone = new JTextField("Enter phone");
 	    JTextField sAddress = new JTextField("Enter Address");
 	    JTextField pCode = new JTextField("Enter postalcode");
@@ -139,7 +135,6 @@ private void signup(){
 	    panel2.add(sAddress);
 	    panel2.add(pCode);
 	    panel2.add(email);
-	    panel2.add(classid);
 	    panel2.setLayout(new BoxLayout(panel2,BoxLayout.Y_AXIS));
 	    
 		panel2.add(BorderLayout.AFTER_LAST_LINE, Register);
@@ -156,31 +151,20 @@ private void signup(){
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == Register)
 					try{
-						
-				    int cid1 = Integer.parseInt(cid.getText());
-				    int classid1 = Integer.parseInt(classid.getText());
-				    int phone1 = Integer.parseInt(phone.getText());
-				    int answer = cid1 + classid1 + phone1;
-				    ;}
+						int cid1 = Integer.parseInt(cid.getText());
+				    }
 				catch (Exception e1) {
-					
-				    System.out.println("Wrong number.Try Again!");
-					JOptionPane.showMessageDialog(null, "Try Again!Wrong Input");
+				    System.out.println("make sure cid is a number");
+					JOptionPane.showMessageDialog(null, "make sure cid is a number");
 				}
-
-			        String name1 = name.getText();
-				    String sAddress1 = sAddress.getText();
-		    		String pCode1 = pCode.getText();
-
-				    	if(pCode1.isEmpty()){
-							JOptionPane.showMessageDialog(null, "Try Again!Wrong PostalCode");
-
-				    	}
-				    	else{	
-				      String email1 = email.getText();
-				   // int classid1 = Integer.parseInt(classid.getText());
-				      JOptionPane.showMessageDialog(null, "Registered");        }
-				// TODO Auto-generated method stub
+				if(instance.signup(Integer.parseInt(cid.getText()), name.getText(), phone.getText(), 
+						sAddress.getText(), pCode.getText(), email.getText())){
+					JOptionPane.showMessageDialog(null, "Registered"); 
+					panel2.setVisible(false);
+				}else{
+					JOptionPane.showMessageDialog(null, "Failed. "
+							+ "Try a different cid and make sure you've entered a valid phone number and postal code"); 
+				}
 				
 			}
 	    });
