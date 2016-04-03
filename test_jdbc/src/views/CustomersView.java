@@ -265,43 +265,6 @@ private class thehandler implements ActionListener {
 									JTextField email = new JTextField("Enter email");
 									JButton Done = new JButton("Done");
 
-									panel4.add(cid);
-									panel4.add(name);
-									panel4.add(phone);
-									panel4.add(sAddress);
-									panel4.add(pCode);
-									panel4.add(email);
-									panel4.setLayout(new BoxLayout(panel4,BoxLayout.Y_AXIS));
-
-									panel4.add(BorderLayout.AFTER_LAST_LINE, Done);
-									frame4.add(panel4);
-									frame4.setSize(300, 300);
-									frame4.setVisible(true);
-
-									//DOING DONE BUTTON NOW
-									Done.addActionListener(new ActionListener(){
-										@Override
-										public void actionPerformed(ActionEvent e) {
-											//if (e.getSource() == Done){
-											try{
-												int cid1 =Integer.parseInt(cid.getText());	
-												String Address = sAddress.getText();
-												String pc = pCode.getText();
-												String emailA = email.getText();
-												}
-											catch (NumberFormatException ne) {
-												JOptionPane.showMessageDialog(null, "Could not parse: " + ne.getMessage());
-											}
-											int cid1 =Integer.parseInt(cid.getText());	
-											String phone1 = phone.getText();
-											String name1 = name.getText();
-											String saddress1 = sAddress.getText();
-											String pCode1 = pCode.getText();
-											String emailA = email.getText();
-											if(pCode1.isEmpty()){
-												JOptionPane.showMessageDialog(null, "Please Enter a Postal Code");
-
-											}
 											
 											String email1 = email.getText();
 											String answer = instance.Updatecustomer(name1, phone1, saddress1, pCode1, emailA,cid1);
