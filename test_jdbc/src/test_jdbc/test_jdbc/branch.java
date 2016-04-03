@@ -1,4 +1,4 @@
-//package test_jdbc;
+package test_jdbc;
 //
 ////We need to import the java.sql package to use JDBC
 //import java.sql.*;
