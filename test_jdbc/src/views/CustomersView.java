@@ -196,29 +196,11 @@ private class thehandler implements ActionListener {
 					    }
 					    catch( Exception e4 ) {
 					           JOptionPane.showMessageDialog(null, "No");}  
-				    //String cname1 = instance.getname(cid);
-				    //int answer1 = Integer.parseInt(answer);
-				  //  if(answer.isEmpty())
-				    //{JOptionPane.showMessageDialog(null, "No id exists");}
-				    //else{		*/
-					//int cids = Integer.parseInt(cid); 
-
-				    //String answer = instance.login(cids);
-					// JOptionPane.showMessageDialog(null, answer);
-
-					/* if(answer.isEmpty()){
-						 
-					
-							// TODO Auto-generated catch block
-							 JOptionPane.showMessageDialog(null, "Answer length cant be 0");
-						}*/
-					 //else {	
-			           //JOptionPane.showMessageDialog(null, answer);
+		
 						 
 						  System.out.println("Button clicked");   
 						  
 						  JButton Updateinfo = new JButton("UPDATE CUSTOMER INFO");
-						  JButton addclass = new JButton("ADD CLASS");
 						  JButton deleteclass = new JButton("DELETE CLASS");
 						  //JButton  = new JButton();
 						  JFrame frame3 = new JFrame("Signup Form");
@@ -226,7 +208,6 @@ private class thehandler implements ActionListener {
 						  panel3.setLayout(new BoxLayout(panel3,BoxLayout.Y_AXIS));
 					    
 						panel3.add(BorderLayout.AFTER_LAST_LINE, Updateinfo);
-						panel3.add(BorderLayout.AFTER_LAST_LINE, addclass);
 						panel3.add(BorderLayout.AFTER_LAST_LINE, deleteclass);
 
 
@@ -298,15 +279,7 @@ private class thehandler implements ActionListener {
 								}}});
 
 								
-								
-					//add button
-
-				 addclass.addActionListener(new ActionListener(){
-							@Override
-							public void actionPerformed(ActionEvent e) {
-								// TODO Auto-generated method stub
-								JOptionPane.showMessageDialog(null, "Try Again!Wrong Input");
-								}});
+			
 						
 				//delete button
 					//delete class button
