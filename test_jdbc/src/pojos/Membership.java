@@ -55,13 +55,12 @@ public class Membership {
 					"ora_s4t8", "a38993127");
 	 
 		Statement stmt = con.createStatement();
-		Statement stmt1 = con.createStatement();
-		ResultSet rs = stmt.executeQuery("SELECT CustomerID FROM Customers"); // RETRIEVE CUSTOMERIDS FROM CUSTOMERS
-		ResultSet rs1 = stmt1.executeQuery("Select CustomerID FROM Membership"); // RETRIEVE CUSTOMERIDS FROM MEMBERSHIP
+		
+	//	ResultSet rs = stmt.executeQuery("SELECT C.name from Customer C, Membership"
+	//			+ "M where C.customerID = M.customerID"); // RETRIEVE CUSTOMERIDS FROM CUSTOMERS
 			
 		// INSERT INTO MEMBERSHIP TABLE
-				while (rs.next()) {
-					if (rs.equals(rs1)); 
+				
 					Statement stmt2 = con.createStatement();
 					int rs2 = stmt2.executeUpdate("INSERT INTO Membership " +
 			                   "VALUES('customerId', 'type', 'validFrom', 'validTo', 'amountpaid', 'fees')");
@@ -69,18 +68,17 @@ public class Membership {
 					//	System.out.println(rs2.getString(1));
 					
 					stmt.close();
-					stmt1.close();
+					
 					stmt2.close();
 					con.close();
 					
-					}
-			
+					
+				
 	
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	} }
-	
 	
 	public void cancelMembership(int CustomerId, char type, int validFrom, int validTo, double amountPaid,
 			double fees, boolean matchedID) {
@@ -99,13 +97,15 @@ public class Membership {
 		ResultSet rs1 = stmt1.executeQuery("SELECT CustomerID FROM Membership"); // RETRIEVE CUSTOMERIDS FROM MEMBERSHIP
 		while (rs.next()) {
 			while (rs1.next()) {
-				matchedID = (rs.getArray(customerID) == rs1.getArray(customerID ));
+			//	matchedID = (rs.getArray(customerID) == rs1.getArray(customerID ));
+			if (rs.getInt(1) == rs1.getInt(1)) {
+				matchedID = true;
 				ResultSet rs2 = stmt.executeQuery("DELETE FROM Membership WHERE matchedID = 'true'");
 //				System.out.println(rs2.getString(1));
 				
 			
 			}
-			
+			}
 			
 		}
 		

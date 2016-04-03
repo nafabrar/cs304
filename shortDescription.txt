@@ -1,0 +1,92 @@
+What the project accomplished
+=============================
+
+We created a working application that supports several kinds of queries and updates on a schema that is very close to
+what we planned in our initial requirements. In many ways it's similar to what a working business would need.
+
+We did not end up supporting all of the actions described in our requirements, because we had to add actions that were not
+in our requirements to satisfy what we were asked to do for the demo, and had to prioritize.
+
+We had to do a lot of work to work around the limitations of SQL
+
+Schema differences
+==================
+
+Our schema didn't change all that much.
+
+Because there's no particular data type for time of day in SQLPlus, we encoded class start and end times as timestamps. This made
+an additional day of week field irrelevant, since timestamps can encode that information.
+
+Functional Dependencies
+=======================
+
+We did not change any functional dependencies from our plan, so our original discussion of them from part 2 still applies. We've
+copied it here for completeness
+
+
+Functional Dependency Explanations
+==================================
+ClassType:
+name->description
+The name of a type of class determines what the description of the class type is
+Candidate key: name
+ 
+Membership:
+customerId, type, validFrom, ValidTo -> amountPaid, fees
+The customerId along with the type of membership and the memberships valid from and valid to uniquely determine the other attributes of the membership amountPaid and fees
+ 
+type, validFrom -> ValidTo
+The type of the membership combined with the start date will give the end date of the membership
+ 
+type -> fees
+The type of the membership determines how much it will cost
+ 
+Candidate key: customerId, type, validFrom
+ 
+Class:
+classId->size, day, startTime, endTime, type, instructor, branch, isFull, currentlyRun
+The classId is given uniquely to each instance of a class so all other attributes about the class can be determined from it
+Candidate key: classID
+ 
+Employee:
+sin->  name, jobTitle, phoneNumber, streetAddress, city, province, postalCode, emailAddress
+A sin number uniquely identifies each employee
+postalCode -> province, city
+A postal code in Canada determines what city and province an address is in
+emailAddress -> sin
+every employee email address is unique
+phoneNumber -> sin
+every employee phone number is unique
+Candidate keys: (sin), (emailAddress), (phoneNumber)
+ 
+Instructor:
+Trivial dependency.
+ 
+Manager:
+Trivial dependency.
+ 
+Customer:
+customerID -> name, phoneNumber, streetAddress, city, province, postalCode, emailAddress
+A customer Id uniquely identifies all the associated information of a Customer
+postalCode -> province, city
+A postal code in Canada determines what city and province an address is in
+emailAddress -> customerID
+every customer email address is unique
+phoneNumber -> custumerID
+every customer phone number is unique
+Candidate keys: (customerID), (emailAddress), (phoneNumber)
+ 
+Branch:
+postalCode -> province, city
+A postal code in Canada determines what city and province an address is in
+branchID -> streetAddress, city, province, postalCode, phoneNumber, manager
+streetAddress -> branchId
+phoneNumber -> branchId
+The unique branchId can determine all other attributes of a branch
+The streetAddress can determine the branchId as they’re can’t be more than one business with the same address
+The phoneNumber can determine the branchId as each gym branch will have a unique phone number
+Candidate keys: (branchId), (street address), (phoneNumber)
+ 
+CustomerTakesClass
+customerID, classID: signupTime -> isOnWaitlist
+The isOnwaitlist flag will be set when a customer signs up if the class is full.

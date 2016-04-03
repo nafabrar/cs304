@@ -164,6 +164,7 @@ private void signup(){
 				}else{
 					JOptionPane.showMessageDialog(null, "Failed. "
 							+ "Try a different cid and make sure you've entered a valid phone number and postal code"); 
+
 				}
 				
 			}
@@ -196,7 +197,7 @@ private class thehandler implements ActionListener {
 					    catch( Exception e4 ) {
 					           JOptionPane.showMessageDialog(null, "No");}  
 				    //String cname1 = instance.getname(cid);
-				    //int answer1 = Integer.getInteger(answer);
+				    //int answer1 = Integer.parseInt(answer);
 				  //  if(answer.isEmpty())
 				    //{JOptionPane.showMessageDialog(null, "No id exists");}
 				    //else{		*/
@@ -234,77 +235,68 @@ private class thehandler implements ActionListener {
 						frame3.setVisible(true);
 						
 //updatebutton
-					Updateinfo.addActionListener(new ActionListener(){
-					    
-						@Override
+						Updateinfo.addActionListener(new ActionListener(){
+
+							@Override
 							public void actionPerformed(ActionEvent e) {
-								// TODO Auto-generated method stub JFrame frame2 = new JFrame("Signup Form");
-							    if(e.getSource() == Updateinfo){
-							    JFrame frame4 = new JFrame("Update Info");
+								if(e.getSource() == Updateinfo){
+									JFrame frame4 = new JFrame("Update Info");
+									JPanel panel4 = new JPanel();
+									JTextField cid = new JTextField("Enter cid");
+									JTextField name = new JTextField("Enter Customer name");
+									JTextField phone = new JTextField("Enter phone");
+									JTextField sAddress = new JTextField("Enter Address");
+									JTextField pCode = new JTextField("Enter postalcode");
+									JTextField email = new JTextField("Enter email");
+									JButton Done = new JButton("Done");
 
-								JPanel panel4 = new JPanel();
+									panel4.add(cid);
+									panel4.add(name);
+									panel4.add(phone);
+									panel4.add(sAddress);
+									panel4.add(pCode);
+									panel4.add(email);
+									panel4.setLayout(new BoxLayout(panel4,BoxLayout.Y_AXIS));
 
-							    
-							   
-								
-								JTextField cid = new JTextField("Enter cid");
-								JTextField name = new JTextField("Enter Customer name");
-							    JTextField phone = new JTextField("Enter phone");
-							    JTextField sAddress = new JTextField("Enter Address");
-							    JTextField pCode = new JTextField("Enter postalcode");
-							    JTextField email = new JTextField("Enter email");
-								JButton Done = new JButton("Done");
+									panel4.add(BorderLayout.AFTER_LAST_LINE, Done);
+									frame4.add(panel4);
+									frame4.setSize(300, 300);
+									frame4.setVisible(true);
 
-							   // panel4.add(cid);
-							   panel4.add(cid);
-								panel4.add(name);
-							    panel4.add(phone);
-							    panel4.add(sAddress);
-							    panel4.add(pCode);
-							    panel4.add(email);
-							    panel4.setLayout(new BoxLayout(panel4,BoxLayout.Y_AXIS));
-							    
-								panel4.add(BorderLayout.AFTER_LAST_LINE, Done);
-								frame4.add(panel4);
-								frame4.setSize(300, 300);
-								frame4.setVisible(true);
-								
-	//DOING DONE BUTTON NOW
-								Done.addActionListener(new ActionListener(){
-									@Override
-									public void actionPerformed(ActionEvent e) {
-										//if (e.getSource() == Done){
+									//DOING DONE BUTTON NOW
+									Done.addActionListener(new ActionListener(){
+										@Override
+										public void actionPerformed(ActionEvent e) {
+											//if (e.getSource() == Done){
 											try{
-											int cid1 =Integer.getInteger(cid.getText());	
-										    int phone1 = Integer.parseInt(phone.getText());
-										     String Address = sAddress.getText();
-										     String pc = pCode.getText();
-										     String emailA = email.getText();}
-                                             
-										    
-										catch (Exception e1) {
-											
-										    System.out.println("Try Again!");
-											JOptionPane.showMessageDialog(null, "Try Again!Wrong Input");
-										}
-											int cid1 =Integer.getInteger(cid.getText());	
-										    String phone1 = (phone.getText());
-									        String name1 = name.getText();
-										    String saddress1 = sAddress.getText();
-								    		String pCode1 = pCode.getText();
-								    		String emailA = email.getText();
-										    	if(pCode1.isEmpty()){
-													JOptionPane.showMessageDialog(null, "Try Again!Wrong PostalCode");
+												int cid1 =Integer.parseInt(cid.getText());	
+												String Address = sAddress.getText();
+												String pc = pCode.getText();
+												String emailA = email.getText();
+												}
+											catch (NumberFormatException ne) {
+												JOptionPane.showMessageDialog(null, "Could not parse: " + ne.getMessage());
+											}
+											int cid1 =Integer.parseInt(cid.getText());	
+											String phone1 = phone.getText();
+											String name1 = name.getText();
+											String saddress1 = sAddress.getText();
+											String pCode1 = pCode.getText();
+											String emailA = email.getText();
+											if(pCode1.isEmpty()){
+												JOptionPane.showMessageDialog(null, "Please Enter a Postal Code");
 
-										    	}
-										    	//else{	
-										      String email1 = email.getText();
-										   // int classid1 = Integer.parseInt(classid.getText());
-										      String answer =instance.Updatecustomer(name1, phone1, saddress1, pCode1, emailA,cid1);
-										      JOptionPane.showMessageDialog(null, "Done"); }});       
-										
-									}}});
-								
+											}
+											
+											String email1 = email.getText();
+											String answer = instance.Updatecustomer(name1, phone1, saddress1, pCode1, emailA,cid1);
+											JOptionPane.showMessageDialog(null, answer); 
+											}
+										}
+									);       
+
+								}}});
+
 								
 								
 					//add button
@@ -336,7 +328,7 @@ private class thehandler implements ActionListener {
 							JButton Delete = new JButton("Delete");
 							
 							try{
-								int cid1 =Integer.getInteger(cid.getText());	
+								int cid1 =Integer.parseInt(cid.getText());	
 							    int clid1 = Integer.parseInt(clid.getText());}
 							    
                                  
@@ -346,7 +338,7 @@ private class thehandler implements ActionListener {
 							    System.out.println("Try Again!");
 								JOptionPane.showMessageDialog(null, "Try Again!Wrong Input");
 							}
-							int cid1 =Integer.getInteger(cid.getText());	
+							int cid1 =Integer.parseInt(cid.getText());	
 						    int clid1 = Integer.parseInt(clid.getText());
 						   // panel4.add(cid);
 						   panel4.add(cid);

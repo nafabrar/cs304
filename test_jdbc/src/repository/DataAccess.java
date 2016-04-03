@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import pojos.AverageWaitlistResult;
 import pojos.DivisionResult;
 import pojos.Employee;
 import pojos.GymClassListItem;
@@ -200,39 +201,33 @@ public class DataAccess {
 		return null;}
 
 	public String Updatecustomer(String name,String phone,String address,String pc,String email,int cid){
-	try{
-		PreparedStatement ps;
-		ResultSet rs1;
-		String ph;
-		String newname;
-		String nphone;
-		String naddress;
-		String npostalcode;
-		String nphone2;
-		
-		ps = con.prepareStatement("update Customer set name = ?,phoneNumber = ?,streetAddress = ?,postalCode = ?,emailAddress = ? where customerID = ?");
-		 ps.setString(1,name );
-		 ps.setString(2, phone);
-		 ps.setString(3, address);
-		 ps.setString(4, pc);
-		 ps.setString(5, email);
-		 ps.setInt(6, cid);
+		try{
+			PreparedStatement ps;
+			ResultSet rs1;
+			String ph;
+			String newname;
+			String nphone;
+			String naddress;
+			String npostalcode;
+			String nphone2;
 
-		rs1 = ps.executeQuery();
-		 
-		newname = rs1.getString(2);
-		ph = (rs1.getString(3));
-		naddress = rs1.getString(4);
-		npostalcode = rs1.getString(5);
-		cid = Integer.parseInt(rs1.getString(6));
-		nphone2 = (rs1.getString(3));
-		return newname + nphone2 + naddress +npostalcode;
-	
-}
-		catch (SQLException ex){
-			System.out.println("Message: " + ex.getMessage());
-			return null;}
+			ps = con.prepareStatement("update Customer set name = ?,phoneNumber = ?,streetAddress = ?,"
+					+ "postalCode = ?,emailAddress = ? where customerID = ?");
+			ps.setString(1,name );
+			ps.setString(2, phone);
+			ps.setString(3, address);
+			ps.setString(4, pc);
+			ps.setString(5, email);
+			ps.setInt(6, cid);
+
+			int updated = ps.executeUpdate();
+			return ("" + updated + " rows updated");
+
 		}
+		catch (SQLException ex){
+			return "Error: " + ex.getMessage();
+		}
+	}
 	
 	
 	public String deleteCustomer(int cid,int clid){
@@ -291,14 +286,13 @@ public class DataAccess {
 				if(selectionField1.equals("sin")){
 					query.append(" WHERE CAST(e.sin as VARCHAR(25)) LIKE \'" + selectionValue1 + "%\'");
 				}else{
-					selectionValue1.replaceAll(" ","");
 					query.append(" WHERE LOWER(e." + selectionField1.replaceAll(" ","") + ") LIKE lower(\'" 
 					+ selectionValue1 + "\') || \'%\'");
 				}
 			}else if(eqType1.equals("is null")){
-				query.append(" WHERE e." + selectionField1 + " is NULL");
+				query.append(" WHERE e." + selectionField1.replaceAll(" ","") + " is NULL");
 			}else{
-				query.append(" WHERE e." + selectionField1 + eqType1 + "\'" + selectionValue1 + "\'");
+				query.append(" WHERE e." + selectionField1.replaceAll(" ","") + eqType1 + "\'" + selectionValue1 + "\'");
 			}
 		}
 		if(!combinator.isEmpty() && !eqType2.isEmpty() && !selectionValue2.isEmpty()){
@@ -307,14 +301,13 @@ public class DataAccess {
 				if(selectionField2.equals("sin")){
 					query.append(" CAST(e.sin as VARCHAR(25)) LIKE \'" + selectionValue2 + "%\'");
 				}else{
-					selectionValue2.replaceAll(" ","");
 					query.append(" LOWER(e." + selectionField2.replaceAll(" ","") + ") LIKE lower(\'" 
 					+ selectionValue2 + "\') || \'%\'");
 				}
 			}else if(eqType1.equals("is null")){
-				query.append(" e." + selectionField2 + " is NULL");
+				query.append(" e." + selectionField2.replaceAll(" ","") + " is NULL");
 			}else{
-				query.append(" e." + selectionField2 + eqType2 + "\'" + selectionValue2 + "\'");
+				query.append(" e." + selectionField2.replaceAll(" ","") + eqType2 + "\'" + selectionValue2 + "\'");
 			}
 		}
 		
@@ -405,7 +398,7 @@ public class DataAccess {
 				item.teacherName = rs.getString(7);
 				item.address = rs.getString(8);
 				item.inClass = rs.getInt(9);
-				item.inClass = rs.getInt(10);
+				item.waitList = rs.getInt(10);
 				
 				result.add(item);
 			}
@@ -449,5 +442,55 @@ public class DataAccess {
 			return new ArrayList<DivisionResult>();
 		}
 	}
+	
+	/*
+	 *  Select the class type with the minimum or maximum waitlist size
+	 *  @param doMin: true if it should select the min, otherwise it should select max
+	 */
+	public AverageWaitlistResult averageWaitlistMinORMax(boolean doMin) {
+		Statement stmt;
+		try {
+			stmt = con.createStatement();
+			String desc = " DESC ";
+			if (doMin) {
+				desc = " ASC ";
+			}
+
+			ResultSet rs = stmt.executeQuery(
+						"SELECT tname, avg FROM ( "
+						+ " SELECT t.name as tname, (COALESCE(AVG(waitlist.wl), 0)) as avg "
+							+ "  FROM ClassType t  "
+							+ "  LEFT JOIN Class c on t.name = c.type "
+							+ "  LEFT JOIN ( "
+							+ "    SELECT tcw.classID, COALESCE(COUNT(*), 0) AS wl "
+							+ "    FROM CustomerTakesClass tcw "
+							+ "    WHERE tcw.isOnWaitlist > 0 "
+							+ "    GROUP BY tcw.classID "
+							+ "  ) waitlist ON c.classid = waitlist.classid "
+							+ "  GROUP BY t.name "
+							+ " ORDER BY avg" + desc
+							+ ") "
+							+ " WHERE ROWNUM = 1"
+					);
+
+			
+			AverageWaitlistResult result = new AverageWaitlistResult();
+			result.classType = "";
+			result.averageWaitlist = 0;
+			if (rs.next()) {
+				result.classType = rs.getString(1);
+				result.averageWaitlist = rs.getInt(2);
+			}
+			return result;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			AverageWaitlistResult result = new AverageWaitlistResult();
+			result.classType = "";
+			result.averageWaitlist = 0;
+			return result;
+		}
+	}
+
 
 }

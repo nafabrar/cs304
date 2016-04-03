@@ -6,11 +6,14 @@ import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import pojos.AverageWaitlistResult;
 import pojos.DivisionResult;
 import pojos.GymClassListItem;
 import repository.DataAccess;
@@ -26,9 +29,15 @@ public class ClassesView extends JPanel implements ActionListener {
 	// One to see All classes
 	// And one to see any classes that all customers have taken (this is purely to demo division)
 	private enum ClassViewMode {
-		CURRENT_USER,
+		WAITLIST,
 		ALL,
 		DIVIDE,
+	}
+	
+	public enum waitListAggregateMode {
+		AVERAGE,
+		MIN,
+		MAX,
 	}
 	
 	private JButton refreshButton;
@@ -37,9 +46,11 @@ public class ClassesView extends JPanel implements ActionListener {
 	private JButton[] modeButtons;
 	// These are references to the two modeButtons, since the function changes depending on what mode they are in
 	// At any given time one of these will be null
-	private JButton currentUserButton;
+	private JButton waitlistButton;
 	private JButton allClassesButton;
 	private JButton divideButton;
+	// Buttons to get the min and max of the average waitlist by type
+	private JButton waitlistButtons[];
 	
 	private JLabel tableLabel;
 	private JTable classesTable;
@@ -72,24 +83,25 @@ public class ClassesView extends JPanel implements ActionListener {
 		refreshButton.addActionListener(this);
 		buttonsPane.add(refreshButton);
 		mode = ClassViewMode.ALL;
-		tableLabel = new JLabel("My Classes");
+		tableLabel = new JLabel("Average Waitlist by Type");
 		modeButtons = new JButton[2];
 		for (int i = 0; i < 2; i++) {
 			modeButtons[i] = new JButton();
 			modeButtons[i].addActionListener(this);
 			buttonsPane.add(modeButtons[i]);
 		}
+		buttonsPane.add(modeButtons[0]);
 		changeMode(mode);
 		tableTitlePane.add(tableLabel);
 		resetMaximums();
 		if (modeButtons[0] == null || modeButtons[1] == null ) {
-			System.out.println("FUCK");
+			System.out.println("Mode buttons are null");
 		}
 		
 		tableModel = new DefaultTableModel(0, 0);
 		classesTable = new JTable(tableModel);
 		refresh();
-		tablePane.add(classesTable);
+		tablePane.add(new JScrollPane(classesTable));
     }
 	
 	// Make sure to keep layout looking okay when we change text
@@ -105,17 +117,19 @@ public class ClassesView extends JPanel implements ActionListener {
 		switch(mode) {
 		case ALL:
 			List<GymClassListItem> allData = DataAccess.getInstance().getAllClassesWithCounts();
-			
+
 			// Clear the table Model
 			tableModel.setRowCount(0);
 			tableModel.setColumnCount(0);
 			String[] allCols = {"ClassID",
-			                 "Size",
-			                 "Times",
-			                 "Class Type",
-			                 "Teacher",
-			                 "Branch"
-					};
+					"Size",
+					"Times",
+					"Class Type",
+					"Teacher",
+					"Branch",
+					"Enrolled",
+					"Waitlist",
+			};
 			tableModel.setColumnCount(allCols.length);
 			tableModel.setColumnIdentifiers(allCols);
 			for (GymClassListItem item: allData) {
@@ -126,6 +140,8 @@ public class ClassesView extends JPanel implements ActionListener {
 				row[3] = item.classType;
 				row[4] = item.teacherName;
 				row[5] = item.address;
+				row[6] = "" + item.inClass;
+				row[7] = "" + item.waitList;
 				tableModel.addRow(row);
 			}
 			resetMaximums();
@@ -136,8 +152,8 @@ public class ClassesView extends JPanel implements ActionListener {
 			tableModel.setRowCount(0);
 			tableModel.setColumnCount(0);
 			String[] divideCols = {"ClassID",
-			                 "Class Name",
-					};
+					"Class Name",
+			};
 			tableModel.setColumnCount(divideCols.length);
 			tableModel.setColumnIdentifiers(divideCols);
 			for (DivisionResult item: divideData) {
@@ -148,24 +164,44 @@ public class ClassesView extends JPanel implements ActionListener {
 			}
 			resetMaximums();
 			break;
-			
-		default:
-			System.out.println("not yet implemented");
+		case WAITLIST:
+			//List<AverageWaitlistResult> wlData = DataAccess.getInstance().averageWaitlistByType();
+			AverageWaitlistResult maxWL = DataAccess.getInstance().averageWaitlistMinORMax(false);
+			AverageWaitlistResult minWL = DataAccess.getInstance().averageWaitlistMinORMax(true);
+
+			tableModel.setRowCount(0);
+			tableModel.setColumnCount(0);	
+			String[] waitlistCols = {"MIN/MAX",
+					"Class Type",
+					"Average Wait List",
+			};
+			tableModel.setColumnCount(waitlistCols.length);
+			tableModel.setColumnIdentifiers(waitlistCols);
+			String[] row = new String[waitlistCols.length];
+			row[0] = "MAX";
+			row[1] = maxWL.classType;
+			row[2] = "" + maxWL.averageWaitlist;
+			tableModel.addRow(row);
+			row = new String[waitlistCols.length];
+			row[0] = "MIN";
+			row[1] = minWL.classType;
+			row[2] = "" + minWL.averageWaitlist;
+			tableModel.addRow(row);
+			resetMaximums();
 			break;
-		}
-		
+		}	
 	}
 	
 	private void changeMode(ClassViewMode newMode) {
 		switch (newMode) {
-		case CURRENT_USER:
-			tableLabel.setText("My Classes");
-			currentUserButton = null;
+		case WAITLIST:
+			tableLabel.setText("Waitlist Info");
+			waitlistButton = null;
 			modeButtons[0].setText("All Classes");
 			allClassesButton = modeButtons[0];
 			modeButtons[1].setText("Classes Everyone takes");
 			divideButton = modeButtons[1];
-			mode = ClassViewMode.CURRENT_USER;
+			mode = ClassViewMode.WAITLIST;
 			resetMaximums();
 			
 			// TODO rearrange table for My Classes and load data
@@ -174,10 +210,10 @@ public class ClassesView extends JPanel implements ActionListener {
 			tableLabel.setText("All Classes");
 			mode = ClassViewMode.ALL;
 			allClassesButton = null;
-			modeButtons[0].setText("My Classes");
-			currentUserButton = modeButtons[0];
-			modeButtons[1].setText("Classes Everyone takes");
-			divideButton = modeButtons[1];
+			modeButtons[0].setText("Classes Everyone takes");
+			divideButton = modeButtons[0];
+			modeButtons[1].setText("Waitlist Info");
+			waitlistButton = modeButtons[1];
 			resetMaximums();
 
 			// TODO rearrange table for All Classes and load data
@@ -186,10 +222,10 @@ public class ClassesView extends JPanel implements ActionListener {
 			tableLabel.setText("Classes Everyone takes");
 			mode = ClassViewMode.DIVIDE;
 			divideButton = null;
-			modeButtons[0].setText("My Classes");
-			currentUserButton = modeButtons[0];
-			modeButtons[1].setText("All Classes");
-			allClassesButton = modeButtons[1];
+			modeButtons[0].setText("All Classes");
+			allClassesButton = modeButtons[0];
+			modeButtons[1].setText("Waitlist Info");
+			waitlistButton = modeButtons[1];
 			resetMaximums();
 			
 			// TODO rearrange table for Divide and load data
@@ -205,8 +241,8 @@ public class ClassesView extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == refreshButton) {
 			refresh();
-		} else if (e.getSource() == currentUserButton) {
-			changeMode(ClassViewMode.CURRENT_USER);
+		} else if (e.getSource() == waitlistButton) {
+			changeMode(ClassViewMode.WAITLIST);
 		} else if (e.getSource() == allClassesButton) {
 			changeMode(ClassViewMode.ALL);
 		} else if (e.getSource() == divideButton) {
