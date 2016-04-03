@@ -201,12 +201,12 @@ public class DataAccess {
 		        itemsToAdd.add(cname);
 		        itemsToAdd.add(cids);
 		        someList.addAll(itemsToAdd);
-		        return cname + cids;
+		      //  return cname + cids;
 			}
 		   
 
 			//StringBuilder listString = new StringBuilder();
-			//return someList.toString();
+			return someList.toString();
 			//for (String s : someList)
 			  //   listString.append(s+" ");
 			//return listString.toString();
@@ -231,6 +231,7 @@ public class DataAccess {
 		String nphone2;
 		
 		ps = con.prepareStatement("update Customer set name = ?,phoneNumber = ?,streetAddress = ?,postalCode = ?,emailAddress = ? where customerID = ?");
+		 
 		 ps.setString(1,name );
 		 ps.setString(2, phone);
 		 ps.setString(3, address);
@@ -255,16 +256,22 @@ public class DataAccess {
 		}
 	
 	
-	public String deleteCustomer(int cid,int clid){
+public String deleteCustomer(int cid,int clid){
+		String deleteSQL = "delete from CustomerTakesClass where customerID = ? and classid = ?";
+
 		try{
 			PreparedStatement ps;
-			ResultSet rs1;
-			ps = con.prepareStatement("delete from CustomerTakesClass where cid = ?,clid = ? ");
-			 ps.setInt(1, cid);
-			 ps.setInt(2, clid);
-			 
-			 rs1 = ps.executeQuery();
-			 return "Deleted";
+			int rs1;
+			ps = con.prepareStatement(deleteSQL);
+
+			//ps = con.prepareStatement("delete from CustomerTakesClass where cid = ?,clid = ? ");
+			 ps.setInt(1,cid);
+			 ps.setInt(2,clid);
+			System.out.println("Message: " + ps.toString());
+			 rs1 = ps.executeUpdate();
+				System.out.println("Message: " + rs1);
+
+			return ("" + rs1 + " rows updated");
 		}
 		catch (SQLException ex){
 			System.out.println("Message: " + ex.getMessage());
