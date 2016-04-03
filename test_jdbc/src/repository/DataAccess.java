@@ -88,6 +88,192 @@ public class DataAccess {
 			return false;
 	   }
 	}
+	public String getname(int cid){
+		ResultSet  rs;
+		PreparedStatement  stmt;	
+		try{
+			stmt = con.prepareStatement("SELECT C.name,X.classID FROM Customer C,CustomerTakesClass X WHERE C.customerID = X.customerID AND C.customerID = ?");
+			stmt.setInt(1, cid);
+			
+			rs = stmt.executeQuery();
+			if(rs.next()){
+			String cname = (rs.getString(1));
+			int clid = Integer.parseInt(rs.getString(2));
+			String answer =  "Customer name is :" + cname + "Class Id is :" + clid;
+			//Customers cust = new Customers();
+			return answer ;}
+			else return null;
+		}catch (SQLException ex){
+			System.out.println("Message: " + ex.getMessage());
+			return null;
+		}
+		
+		
+		
+	}
+	
+	public boolean signup(int cid, String name, 
+			String phone,String sAddress,String pCode,String email,int classid)
+			{
+				try {
+				PreparedStatement  ps;
+				String string = "SELECT customerID" + "Customer(customerID, name, phoneNumber, streetaddress, postalcode,emailAddress )"
+						+ "WHERE customerID = ?";
+				ps = con.prepareStatement(string) ;
+				ResultSet rs;
+				
+				//See if the customer already exists or not 
+				rs = ps.executeQuery("SELECT customerID" + "Customer(customerID, name, phoneNumber, streetaddress, postalcode,emailAddress )"
+				+ "WHERE customerID = ?");
+				ps.setInt(1, cid);
+				//if customer exists that person cant signup with that cid and @return false
+				if (rs.next()){
+					return false ;}
+					//else that customer can signup
+				else
+					//Add that new customer in the customer table
+					{ps = con.prepareStatement("INSERT INTO " +
+					   "Customer(customerID, name, phoneNumber, streetaddress, postalcode,emailAddress )" +
+								" VALUES (?, ?, ?, ?, ?, ?)");
+					ps.setInt(1, cid);
+					ps.setString(2, name);
+					ps.setString(3,  phone);
+					ps.setString(4, (sAddress.length() == 0) ? null : sAddress);
+					ps.setString(5,  pCode);
+					ps.setString(6, email);
+					ps.executeUpdate();
+					con.commit();
+					ps.close();
+					
+					//Register class for the new customer 
+					ps = con.prepareStatement("INSERT INTO CustomerTakesClass VALUES " +
+							"(?, ?, ?, ?)");
+					ps.setInt(1, cid);
+					ps.setInt(2, classid);
+					
+					 java.util.Date date = new java.util.Date();
+						long x = date.getTime();
+				             //Passed the milliseconds to constructor of Timestamp class 
+				     	 Timestamp ctime = new Timestamp(x);
+				    ps.setTimestamp(3, ctime);
+					ps.setBoolean(4, false);
+					ps.executeUpdate();
+					con.commit();
+					ps.close();}}
+					
+					
+
+				 catch (SQLException e) {
+					System.out.println("Could not register user: " + e.getMessage());
+				//	rollback();
+					return false;
+				}
+				return true;
+			}
+	/** @return name if the customer logs in successfully */
+	
+	
+	
+	
+	
+	public String login(int cid) {
+		
+		ResultSet  rs;
+		PreparedStatement  ps;
+
+		try
+		{
+			ps = con.prepareStatement("SELECT C.name, X.classid FROM Customer C,CustomerTakesClass X WHERE C.customerID = X.customerID AND C.customerID = ?");
+			//int employeeId = Integer.parseInt(rs.getString("employeeId"));
+
+			ps.setInt(1, cid);
+		
+			
+	ResultSet srs = ps.executeQuery();
+	   List<String> someList = new ArrayList<String>();
+       List<String> itemsToAdd = new ArrayList<String>();
+       
+			if(srs.next()){
+				String cname = srs.getString(1);
+		        int classid = Integer.parseInt(srs.getString(2));
+		        String cids = Integer.toString(classid);
+		        System.out.println(cname + "     " + cids);
+		        
+		        itemsToAdd.add(cname);
+		        itemsToAdd.add(cids);
+		        someList.addAll(itemsToAdd);
+		        return cname + cids;
+			}
+		   
+
+			//StringBuilder listString = new StringBuilder();
+			//return someList.toString();
+			//for (String s : someList)
+			  //   listString.append(s+" ");
+			//return listString.toString();
+			
+		}	
+		
+		catch (SQLException ex)
+		{
+			System.out.println("Could not login: " + ex.getMessage());
+		}
+		return null;}
+
+	public String Updatecustomer(String name,String phone,String address,String pc,String email,int cid){
+	try{
+		PreparedStatement ps;
+		ResultSet rs1;
+		String ph;
+		String newname;
+		String nphone;
+		String naddress;
+		String npostalcode;
+		String nphone2;
+		
+		ps = con.prepareStatement("update Customer set name = ?,phoneNumber = ?,streetAddress = ?,postalCode = ?,emailAddress = ? where customerID = ?");
+		 ps.setString(1,name );
+		 ps.setString(2, phone);
+		 ps.setString(3, address);
+		 ps.setString(4, pc);
+		 ps.setString(5, email);
+		 ps.setInt(6, cid);
+
+		rs1 = ps.executeQuery();
+		 
+		newname = rs1.getString(2);
+		ph = (rs1.getString(3));
+		naddress = rs1.getString(4);
+		npostalcode = rs1.getString(5);
+		cid = Integer.parseInt(rs1.getString(6));
+		nphone2 = (rs1.getString(3));
+		return newname + nphone2 + naddress +npostalcode;
+	
+}
+		catch (SQLException ex){
+			System.out.println("Message: " + ex.getMessage());
+			return null;}
+		}
+	
+	
+	public String deleteCustomer(int cid,int clid){
+		try{
+			PreparedStatement ps;
+			ResultSet rs1;
+			ps = con.prepareStatement("delete from CustomerTakesClass where cid = ?,clid = ? ");
+			 ps.setInt(1, cid);
+			 ps.setInt(2, clid);
+			 
+			 rs1 = ps.executeQuery();
+			 return "Deleted";
+		}
+		catch (SQLException ex){
+			System.out.println("Message: " + ex.getMessage());
+			return null;}
+		}	
+		
+	
+	
 	
 	public Employee GetEmployeeByName(String employeeName){
 		try{
