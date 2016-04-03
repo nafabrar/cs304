@@ -121,20 +121,43 @@ private void signup(){
 	    JFrame frame2 = new JFrame("Signup Form");
 	    JPanel panel2 = new JPanel();
 
-	    JTextField cid = new JTextField("Enter cid");
-	    
-	    JTextField name = new JTextField("Enter name");
-	    JTextField phone = new JTextField("Enter phone");
-	    JTextField sAddress = new JTextField("Enter Address");
-	    JTextField pCode = new JTextField("Enter postalcode");
-	    JTextField email = new JTextField("Enter email");
+
+	    JLabel myLabel = new JLabel("Enter cid");
+	    JTextField cid = new JTextField();
+
+	    panel2.add(myLabel,BorderLayout.WEST);
+	    panel2.add(cid,BorderLayout.CENTER);
+
 	   
-	    panel2.add(cid);
-	    panel2.add(name);
-	    panel2.add(phone);
-	    panel2.add(sAddress);
-	    panel2.add(pCode);
-	    panel2.add(email);
+	    JLabel myLabel1 = new JLabel("Enter name");
+	    JTextField name = new JTextField();
+	    panel2.add(myLabel1,BorderLayout.WEST);
+	    panel2.add(name,BorderLayout.CENTER);
+
+	    JTextField phone = new JTextField();
+	    JLabel myLabel2 = new JLabel("Enter phone");
+	    panel2.add(myLabel2,BorderLayout.WEST);
+	    panel2.add(phone,BorderLayout.CENTER);
+	   
+	    JTextField sAddress = new JTextField();
+	    JLabel myLabel3 = new JLabel("Enter Address");
+	    panel2.add(myLabel3,BorderLayout.WEST);
+	    panel2.add(sAddress,BorderLayout.CENTER);
+	    
+	    
+	   
+	   JLabel myLabel4 = new JLabel("Enter PostalCode");
+	   JTextField pCode = new JTextField();
+	    panel2.add(myLabel4,BorderLayout.WEST);
+	    panel2.add(pCode,BorderLayout.CENTER);
+	    
+		JLabel myLabel5 = new JLabel("Enter Email");
+		JTextField email = new JTextField();
+		panel2.add(myLabel5,BorderLayout.WEST);
+		panel2.add(email,BorderLayout.WEST);
+
+	    
+	  
 	    panel2.setLayout(new BoxLayout(panel2,BoxLayout.Y_AXIS));
 	    
 		panel2.add(BorderLayout.AFTER_LAST_LINE, Register);
