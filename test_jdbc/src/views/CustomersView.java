@@ -354,10 +354,6 @@ private class thehandler implements ActionListener {
 								JOptionPane.showMessageDialog(null, "Try Again!Wrong Input");
 							}
 							int cid1 =Integer.parseInt(cid.getText());	
-						    int clid1 = Integer.parseInt(clid.getText());
-						   // panel4.add(cid);
-						   panel4.add(cid);
-						    int clid1 = Integer.parseInt(clid.getText());
 						   // panel4.add(cid);
 						   panel4.add(cid);
 							panel4.add(clid);
