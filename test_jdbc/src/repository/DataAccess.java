@@ -238,7 +238,7 @@ public class DataAccess {
 				item.teacherName = rs.getString(7);
 				item.address = rs.getString(8);
 				item.inClass = rs.getInt(9);
-				item.inClass = rs.getInt(10);
+				item.waitList = rs.getInt(10);
 				
 				result.add(item);
 			}
