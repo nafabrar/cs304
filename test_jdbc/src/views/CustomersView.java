@@ -300,7 +300,7 @@ private class thehandler implements ActionListener {
 						// TODO Auto-generated method stub
 						 JFrame frame4 = new JFrame("Delete Info");
 
-							JPanel panel4 = new JPanel();
+							JPanel panel12 = new JPanel();
 
 						    
 						   
