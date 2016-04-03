@@ -309,67 +309,53 @@ private class thehandler implements ActionListener {
 								}});
 						
 				//delete button
-				     deleteclass.addActionListener(new ActionListener(){
+					//delete class button
+				 deleteclass.addActionListener(new ActionListener(){
 						 @Override
- 
-				   public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						 JFrame frame4 = new JFrame("Delete Info");
+						 public void actionPerformed(ActionEvent e9) {
+							 
+						    JFrame frame12 = new JFrame("Delete Info");
 
-							JPanel panel4 = new JPanel();
+							JPanel panel12 = new JPanel();
 
 						    
 						   
 							
-							JTextField cid = new JTextField("Enter cid");
+							JTextField cid2 = new JTextField("Enter Cid");
 							
-						    JTextField clid = new JTextField("Enter classid");
+						    JTextField clid2 = new JTextField("Enter clid" );
 						   
 							JButton Delete = new JButton("Delete");
+							panel12.add(cid2);
+							panel12.add(clid2);
+							panel12.add(BorderLayout.AFTER_LAST_LINE, Delete);
+							frame12.add(panel12);
+							frame12.setSize(300, 300);
+							frame12.setVisible(true);
+							 
 							
-							try{
-								int cid1 =Integer.parseInt(cid.getText());	
-							    int clid1 = Integer.parseInt(clid.getText());}
-							    
-                                 
-							    
-							catch (Exception e1) {
-								
-							    System.out.println("Try Again!");
-								JOptionPane.showMessageDialog(null, "Try Again!Wrong Input");
-							}
-							int cid1 =Integer.parseInt(cid.getText());	
-						    int clid1 = Integer.parseInt(clid.getText());
-						   // panel4.add(cid);
-						   panel4.add(cid);
-							panel4.add(clid);
-						    panel4.setLayout(new BoxLayout(panel4,BoxLayout.Y_AXIS));
-						    
-							panel4.add(BorderLayout.AFTER_LAST_LINE, Delete);
-							frame4.add(panel4);
-							frame4.setSize(300, 300);
-							frame4.setVisible(true); 
-						    
-							Delete.addActionListener(new ActionListener(){
+		
+				   
+			 Delete.addActionListener(new ActionListener(){
 
-								public void actionPerformed(ActionEvent e3) {
-										// TODO Auto-generated method stub JFrame frame2 = new JFrame("Signup Form");
-									    if(e.getSource() == Delete){	
-									    	String answer = instance.deleteCustomer(cid1, clid1);
-											JOptionPane.showMessageDialog(null, answer);
-
+				public void actionPerformed(ActionEvent e66) {
+					int cid1 =Integer.parseInt(cid2.getText());	
+				    int clid1 = Integer.parseInt(clid2.getText());
+				    	String answer = instance.deleteCustomer(cid1, clid1);
+						JOptionPane.showMessageDialog(null, answer);
+ }});}});
 					 
-									    }}});}
+									
 					 
 				 
-					});
+					};
 
 					 		
 				
 				 
 				 
 				 }}};
-}}
+}
 							    
 				       
 						
