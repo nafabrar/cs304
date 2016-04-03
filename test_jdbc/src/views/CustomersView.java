@@ -357,6 +357,9 @@ private class thehandler implements ActionListener {
 						    int clid1 = Integer.parseInt(clid.getText());
 						   // panel4.add(cid);
 						   panel4.add(cid);
+						    int clid1 = Integer.parseInt(clid.getText());
+						   // panel4.add(cid);
+						   panel4.add(cid);
 							panel4.add(clid);
 						    panel4.setLayout(new BoxLayout(panel4,BoxLayout.Y_AXIS));
 						    
