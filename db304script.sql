@@ -271,6 +271,7 @@ INSERT ALL
     INTO Manager(sin) VALUES (87654)
     INTO Manager(sin) VALUES (65432)
     INTO Manager(sin) VALUES (97531)
+    INTO Manager(sin) VALUES (34124)
 SELECT 1 FROM DUAL;
 
 INSERT ALL
