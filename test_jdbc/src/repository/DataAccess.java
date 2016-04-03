@@ -89,16 +89,15 @@ public class DataAccess {
 	   }
 	}
 	
-	public Employee GetEmployeeByName(String employeeName){
+	public int EmployeeDelete(String sin){
 		try{
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM employees WHERE name = "+ employeeName);
-			int employeeId = Integer.parseInt(rs.getString("employeeId"));
-			Employee emp = new Employee();
-			return emp;
-		}catch (SQLException ex){
-			System.out.println("Message: " + ex.getMessage());
-			return null;
+			int numDeleted = stmt.executeUpdate("DELETE FROM employee WHERE sin = " + sin);
+			System.out.println(numDeleted);
+			return numDeleted;
+		}catch(Exception ex){
+			System.out.println("Delete employee message failed " + ex.getMessage());
+			return -1;
 		}
 	}
 	
@@ -121,7 +120,7 @@ public class DataAccess {
 		if(isManager){
 			query.append(" INNER JOIN manager m ON m.sin = e.sin");
 		}
-		if(!eqType1.isEmpty() && !selectionValue1.isEmpty()){
+		if((!eqType1.isEmpty() && !selectionValue1.isEmpty()) || eqType1.equals("is null")){
 			if(eqType1.equals("starts with")){
 				if(selectionField1.equals("sin")){
 					query.append(" WHERE CAST(e.sin as VARCHAR(25)) LIKE \'" + selectionValue1 + "%\'");
@@ -135,7 +134,7 @@ public class DataAccess {
 				query.append(" WHERE e." + selectionField1.replaceAll(" ","") + eqType1 + "\'" + selectionValue1 + "\'");
 			}
 		}
-		if(!combinator.isEmpty() && !eqType2.isEmpty() && !selectionValue2.isEmpty()){
+		if(!combinator.isEmpty() && ((!eqType2.isEmpty() && !selectionValue2.isEmpty()) || eqType2.equals("is null"))){
 			query.append(" " + combinator);
 			if(eqType2.equals("starts with")){
 				if(selectionField2.equals("sin")){
@@ -144,7 +143,7 @@ public class DataAccess {
 					query.append(" LOWER(e." + selectionField2.replaceAll(" ","") + ") LIKE lower(\'" 
 					+ selectionValue2 + "\') || \'%\'");
 				}
-			}else if(eqType1.equals("is null")){
+			}else if(eqType2.equals("is null")){
 				query.append(" e." + selectionField2.replaceAll(" ","") + " is NULL");
 			}else{
 				query.append(" e." + selectionField2.replaceAll(" ","") + eqType2 + "\'" + selectionValue2 + "\'");

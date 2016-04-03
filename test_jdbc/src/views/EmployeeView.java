@@ -33,6 +33,8 @@ public class EmployeeView extends JPanel{
 	private JCheckBox isManager;
 	private JScrollPane tableSP;
 	private JTextField sinDelete;
+	private JLabel deleteError;
+	private JButton deleteGo;
 	
 	public EmployeeView(){
 		try{
@@ -58,14 +60,15 @@ public class EmployeeView extends JPanel{
 				colNames.add(checkArray[i].getText());
 			}
 		}
+		setUpDeletion();
+		
 		setUpResultsSpace(instance.EmployeeDemoSelectProject(colNames, 
 				(String) selectionField1.getSelectedItem(), selectionValue1.getText(), 
 				(String) equalityField1.getSelectedItem(), (String) conjunctionField.getSelectedItem(),
 				(String) selectionField2.getSelectedItem(), selectionValue2.getText(),
 				(String) equalityField2.getSelectedItem(),
 				isInstructor.isSelected(), isManager.isSelected()));
-		
-		setUpDeletion();
+			
     }
 	
 	private void setUpCheckBoxes(){
@@ -270,30 +273,47 @@ public class EmployeeView extends JPanel{
 	}
 	
 	private void setUpDeletion(){
+		JLabel deleteText = new JLabel("Type employee sin to delete employee:");
+		deleteText.setForeground(Color.DARK_GRAY);
+		deleteText.setBackground(Color.GRAY);
+		deleteText.setFont(new Font("Serif", Font.PLAIN, 24));
+		
+		this.add(deleteText);
+		
 		this.sinDelete = new JTextField(24);
 		this.add(sinDelete);
 		
-		this.sinDelete.getDocument().addDocumentListener(new DocumentListener() {
-			@Override
-			public void changedUpdate(DocumentEvent arg0) {		
-				DeleteQuery();
-				UpdateQuery();
-			}
-			@Override
-			public void insertUpdate(DocumentEvent arg0) {
-				DeleteQuery();
-				UpdateQuery();
-			}
-			@Override
-			public void removeUpdate(DocumentEvent arg0) {	
-				DeleteQuery();
-				UpdateQuery();
-			}
+		this.deleteGo = new JButton("Run delete");
+		this.deleteGo.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) { 
+		        DeleteQuery();
+		      } 
 		});
+		this.add(deleteGo);
+		
+		this.deleteError = new JLabel("");
+		deleteText.setForeground(Color.DARK_GRAY);
+		deleteText.setBackground(Color.GRAY);
+		deleteText.setFont(new Font("Serif", Font.PLAIN, 24));
+		this.add(deleteError);
+		
 	}
 	
 	private void DeleteQuery(){
-		//need to write
+		int deletedAmount = instance.EmployeeDelete(sinDelete.getText());
+		if(deletedAmount < 1){
+			this.deleteError.setText("No employees with that sin could be deleted");
+			this.repaint();
+	        this.revalidate();
+		}else if(deletedAmount > 1){
+			this.deleteError.setText("More than one employee deleted ?!");
+			this.repaint();
+	        this.revalidate();
+		}else{
+			this.deleteError.setText("");
+			UpdateQuery();
+		}
 	}
 	
 	private void UpdateQuery(){
