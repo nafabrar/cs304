@@ -212,7 +212,7 @@ private class thehandler implements ActionListener {
 					    catch( Exception e4 ) {
 					           JOptionPane.showMessageDialog(null, "No");}  
 				    //String cname1 = instance.getname(cid);
-				    //int answer1 = Integer.getInteger(answer);
+				    //int answer1 = Integer.parseInt(answer);
 				  //  if(answer.isEmpty())
 				    //{JOptionPane.showMessageDialog(null, "No id exists");}
 				    //else{		*/
@@ -291,7 +291,7 @@ private class thehandler implements ActionListener {
 									public void actionPerformed(ActionEvent e) {
 										//if (e.getSource() == Done){
 											try{
-											int cid1 =Integer.getInteger(cid.getText());	
+											int cid1 =Integer.parseInt(cid.getText());	
 										    int phone1 = Integer.parseInt(phone.getText());
 										     String Address = sAddress.getText();
 										     String pc = pCode.getText();
@@ -303,7 +303,7 @@ private class thehandler implements ActionListener {
 										    System.out.println("Try Again!");
 											JOptionPane.showMessageDialog(null, "Try Again!Wrong Input");
 										}
-											int cid1 =Integer.getInteger(cid.getText());	
+											int cid1 =Integer.parseInt(cid.getText());	
 										    String phone1 = (phone.getText());
 									        String name1 = name.getText();
 										    String saddress1 = sAddress.getText();
@@ -352,7 +352,7 @@ private class thehandler implements ActionListener {
 							JButton Delete = new JButton("Delete");
 							
 							try{
-								int cid1 =Integer.getInteger(cid.getText());	
+								int cid1 =Integer.parseInt(cid.getText());	
 							    int clid1 = Integer.parseInt(clid.getText());}
 							    
                                  
@@ -362,7 +362,7 @@ private class thehandler implements ActionListener {
 							    System.out.println("Try Again!");
 								JOptionPane.showMessageDialog(null, "Try Again!Wrong Input");
 							}
-							int cid1 =Integer.getInteger(cid.getText());	
+							int cid1 =Integer.parseInt(cid.getText());	
 						    int clid1 = Integer.parseInt(clid.getText());
 						   // panel4.add(cid);
 						   panel4.add(cid);
