@@ -112,6 +112,7 @@ public class DataAccess {
 		
 	}
 	
+	
 	public boolean signup(int cid, String name, 
 			String phone,String sAddress,String pCode,String email,int classid)
 			{
@@ -251,20 +252,27 @@ public class DataAccess {
 	
 	
 	public String deleteCustomer(int cid,int clid){
+		String deleteSQL = "delete from CustomerTakesClass where customerID = ? and classid = ?";
+
 		try{
 			PreparedStatement ps;
-			ResultSet rs1;
-			ps = con.prepareStatement("delete from CustomerTakesClass where cid = ?,clid = ? ");
-			 ps.setInt(1, cid);
-			 ps.setInt(2, clid);
-			 
-			 rs1 = ps.executeQuery();
-			 return "Deleted";
+			int rs1;
+			ps = con.prepareStatement(deleteSQL);
+
+			//ps = con.prepareStatement("delete from CustomerTakesClass where cid = ?,clid = ? ");
+			 ps.setInt(1,cid);
+			 ps.setInt(2,clid);
+			System.out.println("Message: " + ps.toString());
+			 rs1 = ps.executeUpdate();
+				System.out.println("Message: " + rs1);
+
+			return ("" + rs1 + " rows updated");
 		}
 		catch (SQLException ex){
 			System.out.println("Message: " + ex.getMessage());
 			return null;}
 		}	
+
 		
 	
 	
