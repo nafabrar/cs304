@@ -172,6 +172,12 @@ private void signup(){
 				    String sAddress1 = sAddress.getText();
 		    		String pCode1 = pCode.getText();
 
+				}
+
+			        String name1 = name.getText();
+				    String sAddress1 = sAddress.getText();
+		    		String pCode1 = pCode.getText();
+
 				    	if(pCode1.isEmpty()){
 							JOptionPane.showMessageDialog(null, "Try Again!Wrong PostalCode");
 

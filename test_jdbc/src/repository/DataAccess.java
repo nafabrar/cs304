@@ -113,63 +113,43 @@ public class DataAccess {
 	}
 	
 	public boolean signup(int cid, String name, 
-			String phone,String sAddress,String pCode,String email,int classid)
-			{
-				try {
-				PreparedStatement  ps;
-				String string = "SELECT customerID" + "Customer(customerID, name, phoneNumber, streetaddress, postalcode,emailAddress )"
-						+ "WHERE customerID = ?";
-				ps = con.prepareStatement(string) ;
-				ResultSet rs;
-				
-				//See if the customer already exists or not 
-				rs = ps.executeQuery("SELECT customerID" + "Customer(customerID, name, phoneNumber, streetaddress, postalcode,emailAddress )"
-				+ "WHERE customerID = ?");
-				ps.setInt(1, cid);
-				//if customer exists that person cant signup with that cid and @return false
-				if (rs.next()){
-					return false ;}
-					//else that customer can signup
-				else
-					//Add that new customer in the customer table
-					{ps = con.prepareStatement("INSERT INTO " +
-					   "Customer(customerID, name, phoneNumber, streetaddress, postalcode,emailAddress )" +
-								" VALUES (?, ?, ?, ?, ?, ?)");
-					ps.setInt(1, cid);
-					ps.setString(2, name);
-					ps.setString(3,  phone);
-					ps.setString(4, (sAddress.length() == 0) ? null : sAddress);
-					ps.setString(5,  pCode);
-					ps.setString(6, email);
-					ps.executeUpdate();
-					con.commit();
-					ps.close();
-					
-					//Register class for the new customer 
-					ps = con.prepareStatement("INSERT INTO CustomerTakesClass VALUES " +
-							"(?, ?, ?, ?)");
-					ps.setInt(1, cid);
-					ps.setInt(2, classid);
-					
-					 java.util.Date date = new java.util.Date();
-						long x = date.getTime();
-				             //Passed the milliseconds to constructor of Timestamp class 
-				     	 Timestamp ctime = new Timestamp(x);
-				    ps.setTimestamp(3, ctime);
-					ps.setBoolean(4, false);
-					ps.executeUpdate();
-					con.commit();
-					ps.close();}}
-					
-					
-
-				 catch (SQLException e) {
-					System.out.println("Could not register user: " + e.getMessage());
-				//	rollback();
-					return false;
-				}
-				return true;
-			}
+			String phone,String sAddress,String pCode,String email)
+	{
+		try {
+		PreparedStatement  ps;
+		String string = "SELECT customerID from Customer WHERE customerID = ?";
+		ps = con.prepareStatement(string) ;
+		ResultSet rs;
+		
+		//See if the customer already exists or not 
+		ps.setInt(1, cid);
+		rs = ps.executeQuery();
+		//if customer exists that person cant signup with that cid and @return false
+		if (rs.next()){
+			return false ;}
+			//else that customer can signup
+		else{
+			//Add that new customer in the customer table
+			ps = con.prepareStatement("INSERT INTO " +
+			   "Customer(customerID, name, phoneNumber, streetaddress, postalcode,emailAddress )" +
+						" VALUES (?, ?, ?, ?, ?, ?)");
+			ps.setInt(1, cid);
+			ps.setString(2, name);
+			ps.setString(3,  phone);
+			ps.setString(4, (sAddress.length() == 0) ? null : sAddress);
+			ps.setString(5,  pCode);
+			ps.setString(6, email);
+			ps.executeUpdate();
+			//con.commit();
+			ps.close();
+		}
+	}catch (SQLException e) {
+			System.out.println("Could not register user: " + e.getMessage());
+		//	rollback();
+			return false;
+	}
+		return true;
+	}
 	/** @return name if the customer logs in successfully */
 	
 	
