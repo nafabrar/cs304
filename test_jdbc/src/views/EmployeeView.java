@@ -32,6 +32,7 @@ public class EmployeeView extends JPanel{
 	private JCheckBox isInstructor;
 	private JCheckBox isManager;
 	private JScrollPane tableSP;
+	private JTextField sinDelete;
 	
 	public EmployeeView(){
 		try{
@@ -63,6 +64,8 @@ public class EmployeeView extends JPanel{
 				(String) selectionField2.getSelectedItem(), selectionValue2.getText(),
 				(String) equalityField2.getSelectedItem(),
 				isInstructor.isSelected(), isManager.isSelected()));
+		
+		setUpDeletion();
     }
 	
 	private void setUpCheckBoxes(){
@@ -258,12 +261,39 @@ public class EmployeeView extends JPanel{
 		}
 		JTable table = new JTable(rowData, colNames.toArray());
         JScrollPane tableSP = new JScrollPane(table);
-        tableSP.setPreferredSize(new Dimension(1150, 500));
+        tableSP.setPreferredSize(new Dimension(1150, 225));
 
         this.add(tableSP);
         this.tableSP = tableSP; 
         this.repaint();
         this.revalidate();
+	}
+	
+	private void setUpDeletion(){
+		this.sinDelete = new JTextField(24);
+		this.add(sinDelete);
+		
+		this.sinDelete.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {		
+				DeleteQuery();
+				UpdateQuery();
+			}
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				DeleteQuery();
+				UpdateQuery();
+			}
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {	
+				DeleteQuery();
+				UpdateQuery();
+			}
+		});
+	}
+	
+	private void DeleteQuery(){
+		//need to write
 	}
 	
 	private void UpdateQuery(){
