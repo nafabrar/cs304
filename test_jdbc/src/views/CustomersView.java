@@ -226,7 +226,7 @@ private class thehandler implements ActionListener {
 						  JButton Updateinfo = new JButton("UPDATE CUSTOMER INFO");
 						  JButton deleteclass = new JButton("DELETE CLASS");
 						  //JButton  = new JButton();
-						  JFrame frame3 = new JFrame("Signup Form");
+						  JFrame frame3 = new JFrame("Welcome!!");
 						  JPanel panel3 = new JPanel();
 						  panel3.setLayout(new BoxLayout(panel3,BoxLayout.Y_AXIS));
 					    
@@ -246,20 +246,51 @@ private class thehandler implements ActionListener {
 								if(e.getSource() == Updateinfo){
 									JFrame frame4 = new JFrame("Update Info");
 									JPanel panel4 = new JPanel();
-									JTextField cid = new JTextField("Enter cid");
-									JTextField name = new JTextField("Enter Customer name");
-									JTextField phone = new JTextField("Enter phone");
-									JTextField sAddress = new JTextField("Enter Address");
-									JTextField pCode = new JTextField("Enter postalcode");
-									JTextField email = new JTextField("Enter email");
+									
+									
+									
+									 JLabel myLabel1 = new JLabel("Enter Your CustomerID");
+										JTextField cid = new JTextField();
+									    panel4.add(myLabel1,BorderLayout.WEST);
+									    panel4.add(cid,BorderLayout.CENTER);
+									
+
+										    JLabel myLabel2 = new JLabel("Enter Your name");
+											JTextField name = new JTextField();
+										    panel4.add(myLabel2,BorderLayout.WEST);
+										    panel4.add(name,BorderLayout.CENTER);
+									
+										   
+								    JLabel myLabel3 = new JLabel("Enter Your phone");
+								    JTextField phone = new JTextField();
+								    panel4.add(myLabel3,BorderLayout.WEST);
+								    panel4.add(phone,BorderLayout.CENTER);
+							
+									
+
+									 JLabel myLabel4 = new JLabel("Enter Your StreetAddress");
+										JTextField sAddress = new JTextField();
+									    panel4.add(myLabel4,BorderLayout.WEST);
+									    panel4.add(sAddress,BorderLayout.CENTER);
+									
+									    JLabel myLabel5 = new JLabel("Enter Your Postalcode");
+										JTextField pCode = new JTextField();
+									    panel4.add(myLabel5,BorderLayout.WEST);
+									    panel4.add(pCode,BorderLayout.CENTER);
+									
+									
+									    JLabel myLabel6 = new JLabel("Enter Your Email");
+									    JTextField email = new JTextField();
+									    panel4.add(myLabel6,BorderLayout.WEST);
+									    panel4.add(email,BorderLayout.CENTER);
+									
+									
+									
+									
+									
 									JButton Done = new JButton("Done");
 
-									panel4.add(cid);
-									panel4.add(name);
-									panel4.add(phone);
-									panel4.add(sAddress);
-									panel4.add(pCode);
-									panel4.add(email);
+									
 									panel4.setLayout(new BoxLayout(panel4,BoxLayout.Y_AXIS));
 
 									panel4.add(BorderLayout.AFTER_LAST_LINE, Done);
@@ -316,17 +347,25 @@ private class thehandler implements ActionListener {
 
 						    
 						   
+							 JLabel myLabel1 = new JLabel("Enter Your CustomerID");
+								JTextField cid2 = new JTextField();
+								cid2.setColumns(10);
+
+								panel12.add(myLabel1,BorderLayout.WEST);
+							    panel12.add(cid2,BorderLayout.CENTER);
+							    
+							    JLabel myLabel2 = new JLabel("Enter the classid you want to quit");
+							    JTextField clid2 = new JTextField();
+								clid2.setColumns(10);
+
+							    panel12.add(myLabel2,BorderLayout.WEST);
+							    panel12.add(clid2,BorderLayout.CENTER);
 							
-							JTextField cid2 = new JTextField("Enter Cid");
-							
-						    JTextField clid2 = new JTextField("Enter clid" );
 						   
 							JButton Delete = new JButton("Delete");
-							panel12.add(cid2);
-							panel12.add(clid2);
 							panel12.add(BorderLayout.AFTER_LAST_LINE, Delete);
 							frame12.add(panel12);
-							frame12.setSize(300, 300);
+							frame12.setSize(500, 500);
 							frame12.setVisible(true);
 							 
 							
