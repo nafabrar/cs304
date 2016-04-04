@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import views.CustomersView;
 
 import repository.DataAccess;
 import views.ClassesView;
@@ -54,8 +55,7 @@ public class MainController extends JFrame {
 		 JTabbedPane tabbedPane = new JTabbedPane();
 		 tabbedPane.add("Employees", new EmployeeView());
 		 tabbedPane.add("Classes", new ClassesView());
-		 //TODO create view for customers
-		 tabbedPane.add("Customers", null);
+		  tabbedPane.add("Customers", new CustomersView());
 		 //tabbedPane.add("Membership", new MembershipView());
 		 add(tabbedPane, BorderLayout.CENTER);
 
