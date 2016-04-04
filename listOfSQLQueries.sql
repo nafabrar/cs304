@@ -87,7 +87,7 @@ delete from CustomerTakesClass where customerID = ? and classid = ? ;
 
 /* SELECT,INSERT Operation
 Customers signup to customers table if they dont already have an account using this query.
-If they already exist in the database they cannot signup again.They have to login with their customer id.*/
+If they already exist in the customer table they cannot signup again.They have to login with their customer id.*/
 SELECT customerID from Customer WHERE customerID = ?
 
 INSERT INTO Customer(customerID, name, phoneNumber, streetaddress, postalcode,emailAddress )
