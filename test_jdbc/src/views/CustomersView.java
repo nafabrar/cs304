@@ -173,17 +173,20 @@ private void signup(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == Register)
+					
+					
 					try{
 						int cid1 = Integer.parseInt(cid.getText());
 				    }
 				catch (Exception e1) {
 				    System.out.println("make sure cid is a number");
 					JOptionPane.showMessageDialog(null, "make sure cid is a number");
+					return;
 				}
 				
 					if(phone.getText().length()==0){
 						JOptionPane.showMessageDialog(null, "Wrong Phone Number"); 
-
+						return;
 					}
 				
 				if(instance.signup(Integer.parseInt(cid.getText()), name.getText(), phone.getText(), 
