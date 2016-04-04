@@ -15,6 +15,7 @@ import javax.swing.border.LineBorder;
 import repository.DataAccess;
 import views.ClassesView;
 import views.EmployeeView;
+import views.MembershipView;
 
 public class MainController extends JFrame {
 
@@ -55,6 +56,7 @@ public class MainController extends JFrame {
 		 tabbedPane.add("Classes", new ClassesView());
 		 //TODO create view for customers
 		 tabbedPane.add("Customers", null);
+		 //tabbedPane.add("Membership", new MembershipView());
 		 add(tabbedPane, BorderLayout.CENTER);
 
 		 setSize(1200, 700);
