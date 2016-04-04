@@ -1,4 +1,4 @@
-package src.pojos.views;
+package views;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -15,8 +15,8 @@ import javax.swing.*;
 
 import com.sun.prism.PixelFormat.DataType;
 
-import src.pojos.Membership;
-import src.repository.DataAccess;
+import pojos.Membership;
+import repository.DataAccess;
 
 
 
