@@ -332,6 +332,10 @@ public class DataAccess {
 			return result;
 		}
 	}
+	
+	public Connection getConnection(){
+		return this.con;
+	}
 
 
 }
