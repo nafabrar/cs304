@@ -211,8 +211,10 @@ private class thehandler implements ActionListener {
 
 					    String answer = instance.login(cids);
 						JOptionPane.showMessageDialog(null, answer);
-
-					   
+						
+						if (answer.equals("Incorrect")){
+							return;
+						}
 					   
 						
 					        Integer.parseInt( cid );
@@ -312,8 +314,11 @@ private class thehandler implements ActionListener {
 											catch (NumberFormatException ne) {
 												JOptionPane.showMessageDialog(null, "Could not parse: " + ne.getMessage());
 											}
+											
 											int cid1 =Integer.parseInt(cid.getText());	
+											
 											String phone1 = phone.getText();
+											
 											String name1 = name.getText();
 											String saddress1 = sAddress.getText();
 											String pCode1 = pCode.getText();

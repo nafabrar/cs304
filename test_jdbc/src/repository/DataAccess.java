@@ -168,10 +168,13 @@ public class DataAccess {
 							"WHERE C.customerId = ?");
 			ps.setInt(1, cid);
 
-
 			ResultSet srs = ps.executeQuery();
 			List<Integer> classIds = new ArrayList<Integer>();
 			String cname = null;
+			if(srs.next() == false)
+			{
+				return  "Incorrect";
+			}
 			while (srs.next()){
 				cname = srs.getString(1);
 				int classId = srs.getInt(2);
