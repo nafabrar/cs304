@@ -1,4 +1,4 @@
-package test_jdbc.test_jdbc;
+package test_jdbc;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

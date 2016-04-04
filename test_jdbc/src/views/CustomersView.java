@@ -211,14 +211,18 @@ private class thehandler implements ActionListener {
 
 					    String answer = instance.login(cids);
 						JOptionPane.showMessageDialog(null, answer);
-
-					   
+						
+						if (answer.equals("Incorrect")){
+							return;
+						}
 					   
 						
 					        Integer.parseInt( cid );
 					    }
 					    catch( Exception e4 ) {
-					           JOptionPane.showMessageDialog(null, "No");}  
+					           JOptionPane.showMessageDialog(null, "Please provide a correct customerID");
+					    return;       
+					    }  
 		
 						 
 						  System.out.println("Button clicked");   
@@ -305,15 +309,16 @@ private class thehandler implements ActionListener {
 											//if (e.getSource() == Done){
 											try{
 												int cid1 =Integer.parseInt(cid.getText());	
-												String Address = sAddress.getText();
-												String pc = pCode.getText();
-												String emailA = email.getText();
+												
 												}
 											catch (NumberFormatException ne) {
 												JOptionPane.showMessageDialog(null, "Could not parse: " + ne.getMessage());
 											}
+											
 											int cid1 =Integer.parseInt(cid.getText());	
+											
 											String phone1 = phone.getText();
+											
 											String name1 = name.getText();
 											String saddress1 = sAddress.getText();
 											String pCode1 = pCode.getText();
@@ -339,10 +344,9 @@ private class thehandler implements ActionListener {
 					//delete class button
 				 deleteclass.addActionListener(new ActionListener(){
 						 @Override
- 
-				   public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						 JFrame frame4 = new JFrame("Delete Info");
+						 public void actionPerformed(ActionEvent e9) {
+							 
+						    JFrame frame12 = new JFrame("Delete Info");
 
 							JPanel panel12 = new JPanel();
 

@@ -168,10 +168,13 @@ public class DataAccess {
 							"WHERE C.customerId = ?");
 			ps.setInt(1, cid);
 
-
 			ResultSet srs = ps.executeQuery();
 			List<Integer> classIds = new ArrayList<Integer>();
 			String cname = null;
+			if(srs.next() == false)
+			{
+				return  "Incorrect";
+			}
 			while (srs.next()){
 				cname = srs.getString(1);
 				int classId = srs.getInt(2);
@@ -187,6 +190,7 @@ public class DataAccess {
 		}
 		return "Could not find customer with ID " + cid;
 	}
+
 
 	public String Updatecustomer(String name,String phone,String address,String pc,String email,int cid){
 		try{
@@ -238,10 +242,7 @@ public class DataAccess {
 		catch (SQLException ex){
 			System.out.println("Message: " + ex.getMessage());
 			return null;}
-		}	
-
-		
-	
+		}
 	
 	
 	public Employee GetEmployeeByName(String employeeName){
