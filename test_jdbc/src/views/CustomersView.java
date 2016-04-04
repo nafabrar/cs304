@@ -218,7 +218,9 @@ private class thehandler implements ActionListener {
 					        Integer.parseInt( cid );
 					    }
 					    catch( Exception e4 ) {
-					           JOptionPane.showMessageDialog(null, "No");}  
+					           JOptionPane.showMessageDialog(null, "Please provide a correct customerID");
+					    return;       
+					    }  
 		
 						 
 						  System.out.println("Button clicked");   
@@ -305,9 +307,7 @@ private class thehandler implements ActionListener {
 											//if (e.getSource() == Done){
 											try{
 												int cid1 =Integer.parseInt(cid.getText());	
-												String Address = sAddress.getText();
-												String pc = pCode.getText();
-												String emailA = email.getText();
+												
 												}
 											catch (NumberFormatException ne) {
 												JOptionPane.showMessageDialog(null, "Could not parse: " + ne.getMessage());
