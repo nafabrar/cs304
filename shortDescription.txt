@@ -1,13 +1,17 @@
 What the project accomplished
 =============================
 
-We created a working application that supports several kinds of queries and updates on a schema that is very close to
-what we planned in our initial requirements. In many ways it's similar to what a working business would need.
+We created a working application that supports several kinds of queries and updates on a schema that is almost exactly
+what we planned in our initial requirements. In many ways it's similar to what a working business would need although it's not
+totally feature complete for a real gym.
 
 We did not end up supporting all of the actions described in our requirements, because we had to add actions that were not
 in our requirements to satisfy what we were asked to do for the demo, and had to prioritize.
 
-We had to do a lot of work to work around the limitations of SQL
+We had to do a lot of work to work around the limitations of SQLPlus, which is fairly particular about how queries are formatted
+and doesn't support everything that other SQL implementations do. In particular, when a query fails, the error message rarely
+gives much of a hint as to why. We all learned a lot about debugging both sql and the jdbc layer that connects the java 
+application to sql.
 
 Schema differences
 ==================
