@@ -180,6 +180,12 @@ private void signup(){
 				    System.out.println("make sure cid is a number");
 					JOptionPane.showMessageDialog(null, "make sure cid is a number");
 				}
+				
+					if(phone.getText().length()==0){
+						JOptionPane.showMessageDialog(null, "Wrong Phone Number"); 
+
+					}
+				
 				if(instance.signup(Integer.parseInt(cid.getText()), name.getText(), phone.getText(), 
 						sAddress.getText(), pCode.getText(), email.getText())){
 					JOptionPane.showMessageDialog(null, "Registered"); 
