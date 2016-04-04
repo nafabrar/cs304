@@ -6,15 +6,21 @@ This is the list of all sql queries used in the assignment, asked for by the ass
 Get Employee By Name
 This query is simple and self explanatory
  */
-SELECT * FROM employees WHERE name = ?;
+SELECT * FROM employee WHERE name = ?;
 
 /*
 Employee Selection/Projection query
 This query is built up in java based on user choices and is quite complex. It allows a user to select
-specific fields from the employee table, and check whether they match specific patterns.
+specific fields from the employee table, and check whether they match specific patterns. It also allows for
+the user to join on the instructor and manager table to check if the employee is a manager/instructor.
 The logic that constructs it is fairly complex
 Please see the EmployeeDemoSelectProject method in DataAccess.java
  */
+ 
+ /* Delete Employee by sin
+ this is a cascade on delete situation to remove an employee and records associated with them in other tables.
+ */
+ DELETE FROM employee WHERE sin = ?;
 
 /* Get All Classes with Counts 
 This fills a dashboard-style table with information about classes. It aggregates up the customertakesclass table to count
