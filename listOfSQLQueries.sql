@@ -20,6 +20,7 @@ Please see the EmployeeDemoSelectProject method in DataAccess.java
  /* Insert a new Membership into the Membership table
  This was quite an intricate query that required to convert and parse different texts (including Date) 
  that are inputted by the user in the GUI text boxes in order to successfully add the new Membership in the Membership table.
+ */
  INSERT into Membership VALUES" + "(?,?,?,?)
  
  /* Delete Employee by sin
