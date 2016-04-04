@@ -17,6 +17,11 @@ The logic that constructs it is fairly complex
 Please see the EmployeeDemoSelectProject method in DataAccess.java
  */
  
+ /* Insert a new Membership into the Membership table
+ This was quite an intricate query that required to convert and parse different texts (including Date) 
+ that are inputted by the user in the GUI text boxes in order to successfully add the new Membership in the Membership table.
+ INSERT into Membership VALUES" + "(?,?,?,?)
+ 
  /* Delete Employee by sin
  this is a cascade on delete situation to remove an employee and records associated with them in other tables.
  */
