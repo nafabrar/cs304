@@ -88,7 +88,161 @@ public class DataAccess {
 			return false;
 	   }
 	}
+	public String getname(int cid){
+		ResultSet  rs;
+		PreparedStatement  stmt;	
+		try{
+			stmt = con.prepareStatement("SELECT C.name,X.classID FROM Customer C,CustomerTakesClass X WHERE C.customerID = X.customerID AND C.customerID = ?");
+			stmt.setInt(1, cid);
+			
+			rs = stmt.executeQuery();
+			if(rs.next()){
+			String cname = (rs.getString(1));
+			int clid = Integer.parseInt(rs.getString(2));
+			String answer =  "Customer name is :" + cname + "Class Id is :" + clid;
+			//Customers cust = new Customers();
+			return answer ;}
+			else return null;
+		}catch (SQLException ex){
+			System.out.println("Message: " + ex.getMessage());
+			return null;
+		}
+		
+		
+		
+	}
 	
+	
+	public boolean signup(int cid, String name, 
+			String phone,String sAddress,String pCode,String email)
+	{
+		try {
+		PreparedStatement  ps;
+		String string = "SELECT customerID from Customer WHERE customerID = ?";
+		ps = con.prepareStatement(string) ;
+		ResultSet rs;
+		
+		//See if the customer already exists or not 
+		ps.setInt(1, cid);
+		rs = ps.executeQuery();
+		//if customer exists that person cant signup with that cid and @return false
+		if (rs.next()){
+			return false ;}
+			//else that customer can signup
+		else{
+			//Add that new customer in the customer table
+			ps = con.prepareStatement("INSERT INTO " +
+			   "Customer(customerID, name, phoneNumber, streetaddress, postalcode,emailAddress )" +
+						" VALUES (?, ?, ?, ?, ?, ?)");
+			ps.setInt(1, cid);
+			ps.setString(2, name);
+			ps.setString(3,  phone);
+			ps.setString(4, (sAddress.length() == 0) ? null : sAddress);
+			ps.setString(5,  pCode);
+			ps.setString(6, email);
+			ps.executeUpdate();
+			//con.commit();
+			ps.close();
+		}
+	}catch (SQLException e) {
+			System.out.println("Could not register user: " + e.getMessage());
+		//	rollback();
+			return false;
+	}
+		return true;
+	}
+	/** @return name if the customer logs in successfully */
+	
+	
+	
+	
+	
+	public String login(int cid) {
+
+		ResultSet  rs;
+		PreparedStatement  ps;
+
+		try
+		{
+			ps = con.prepareStatement("SELECT C.name, X.classid FROM Customer C LEFT JOIN CustomerTakesClass X ON C.CustomerID = X.CustomerID " +
+							"WHERE C.customerId = ?");
+			ps.setInt(1, cid);
+
+			ResultSet srs = ps.executeQuery();
+			List<Integer> classIds = new ArrayList<Integer>();
+			String cname = null;
+			if(srs.next() == false)
+			{
+				return  "Incorrect";
+			}
+			while (srs.next()){
+				cname = srs.getString(1);
+				int classId = srs.getInt(2);
+				classIds.add(classId);
+			}
+			if (cname != null) {
+				return cname + classIds.toString();
+			}
+		}	
+		catch (SQLException ex) {
+			System.out.println("Could not login: " + ex.getMessage());
+			return ex.getMessage();
+		}
+		return "Could not find customer with ID " + cid;
+	}
+
+	public String Updatecustomer(String name,String phone,String address,String pc,String email,int cid){
+		try{
+			PreparedStatement ps;
+			ResultSet rs1;
+			String ph;
+			String newname;
+			String nphone;
+			String naddress;
+			String npostalcode;
+			String nphone2;
+
+			ps = con.prepareStatement("update Customer set name = ?,phoneNumber = ?,streetAddress = ?,"
+					+ "postalCode = ?,emailAddress = ? where customerID = ?");
+			ps.setString(1,name );
+			ps.setString(2, phone);
+			ps.setString(3, address);
+			ps.setString(4, pc);
+			ps.setString(5, email);
+			ps.setInt(6, cid);
+
+			int updated = ps.executeUpdate();
+			return ("" + updated + " rows updated");
+
+		}
+		catch (SQLException ex){
+			return "Error: " + ex.getMessage();
+		}
+	}
+	
+	
+	public String deleteCustomer(int cid,int clid){
+		String deleteSQL = "delete from CustomerTakesClass where customerID = ? and classid = ?";
+
+		try{
+			PreparedStatement ps;
+			int rs1;
+			ps = con.prepareStatement(deleteSQL);
+
+			//ps = con.prepareStatement("delete from CustomerTakesClass where cid = ?,clid = ? ");
+			 ps.setInt(1,cid);
+			 ps.setInt(2,clid);
+			System.out.println("Message: " + ps.toString());
+			 rs1 = ps.executeUpdate();
+				System.out.println("Message: " + rs1);
+
+			return ("" + rs1 + " rows updated");
+		}
+		catch (SQLException ex){
+			System.out.println("Message: " + ex.getMessage());
+			return null;}
+		}	
+
 	public Employee GetEmployeeByName(String employeeName){
 		try{
 			Statement stmt = con.createStatement();
