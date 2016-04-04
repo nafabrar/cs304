@@ -115,31 +115,49 @@ public void info(int cid){
 	
 }			
 private void signup(){
-	  //signup.setText("Signinup!");
-	  String	string = " ";
 	  System.out.println("Button clicked");
 	  
 	  //TO Signup form
 	    JFrame frame2 = new JFrame("Signup Form");
 	    JPanel panel2 = new JPanel();
 
-	    JTextField cid = new JTextField("Enter cid");
-	    
-	    JTextField classid = new JTextField("Enter classid");
 
-	    JTextField name = new JTextField("Enter class name");
-	    JTextField phone = new JTextField("Enter phone");
-	    JTextField sAddress = new JTextField("Enter Address");
-	    JTextField pCode = new JTextField("Enter postalcode");
-	    JTextField email = new JTextField("Enter email");
+	    JLabel myLabel = new JLabel("Enter cid");
+	    JTextField cid = new JTextField();
+
+	    panel2.add(myLabel,BorderLayout.WEST);
+	    panel2.add(cid,BorderLayout.CENTER);
+
 	   
-	    panel2.add(cid);
-	    panel2.add(name);
-	    panel2.add(phone);
-	    panel2.add(sAddress);
-	    panel2.add(pCode);
-	    panel2.add(email);
-	    panel2.add(classid);
+	    JLabel myLabel1 = new JLabel("Enter name");
+	    JTextField name = new JTextField();
+	    panel2.add(myLabel1,BorderLayout.WEST);
+	    panel2.add(name,BorderLayout.CENTER);
+
+	    JTextField phone = new JTextField();
+	    JLabel myLabel2 = new JLabel("Enter phone");
+	    panel2.add(myLabel2,BorderLayout.WEST);
+	    panel2.add(phone,BorderLayout.CENTER);
+	   
+	    JTextField sAddress = new JTextField();
+	    JLabel myLabel3 = new JLabel("Enter Address");
+	    panel2.add(myLabel3,BorderLayout.WEST);
+	    panel2.add(sAddress,BorderLayout.CENTER);
+	    
+	    
+	   
+	   JLabel myLabel4 = new JLabel("Enter PostalCode");
+	   JTextField pCode = new JTextField();
+	    panel2.add(myLabel4,BorderLayout.WEST);
+	    panel2.add(pCode,BorderLayout.CENTER);
+	    
+		JLabel myLabel5 = new JLabel("Enter Email");
+		JTextField email = new JTextField();
+		panel2.add(myLabel5,BorderLayout.WEST);
+		panel2.add(email,BorderLayout.WEST);
+
+	    
+	  
 	    panel2.setLayout(new BoxLayout(panel2,BoxLayout.Y_AXIS));
 	    
 		panel2.add(BorderLayout.AFTER_LAST_LINE, Register);
@@ -156,37 +174,21 @@ private void signup(){
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == Register)
 					try{
-						
-				    int cid1 = Integer.parseInt(cid.getText());
-				    int classid1 = Integer.parseInt(classid.getText());
-				    int phone1 = Integer.parseInt(phone.getText());
-				    int answer = cid1 + classid1 + phone1;
+						int cid1 = Integer.parseInt(cid.getText());
 				    }
 				catch (Exception e1) {
-				    System.out.println("Wrong number.Try Again!");
-					JOptionPane.showMessageDialog(null, "Try Again!Wrong Input");
-					return;
+				    System.out.println("make sure cid is a number");
+					JOptionPane.showMessageDialog(null, "make sure cid is a number");
 				}
-
-			        String name1 = name.getText();
-				    String sAddress1 = sAddress.getText();
-		    		String pCode1 = pCode.getText();
+				if(instance.signup(Integer.parseInt(cid.getText()), name.getText(), phone.getText(), 
+						sAddress.getText(), pCode.getText(), email.getText())){
+					JOptionPane.showMessageDialog(null, "Registered"); 
+					frame2.dispose();
+				}else{
+					JOptionPane.showMessageDialog(null, "Failed. "
+							+ "Try a different cid and make sure you've entered a valid phone number and postal code"); 
 
 				}
-
-			        String name1 = name.getText();
-				    String sAddress1 = sAddress.getText();
-		    		String pCode1 = pCode.getText();
-
-				    	if(pCode1.isEmpty()){
-							JOptionPane.showMessageDialog(null, "Try Again!Wrong PostalCode");
-
-				    	}
-				    	else{	
-				      String email1 = email.getText();
-				   // int classid1 = Integer.parseInt(classid.getText());
-				      JOptionPane.showMessageDialog(null, "Registered");        }
-				// TODO Auto-generated method stub
 				
 			}
 	    });
@@ -224,7 +226,7 @@ private class thehandler implements ActionListener {
 						  JButton Updateinfo = new JButton("UPDATE CUSTOMER INFO");
 						  JButton deleteclass = new JButton("DELETE CLASS");
 						  //JButton  = new JButton();
-						  JFrame frame3 = new JFrame("Signup Form");
+						  JFrame frame3 = new JFrame("Welcome!!");
 						  JPanel panel3 = new JPanel();
 						  panel3.setLayout(new BoxLayout(panel3,BoxLayout.Y_AXIS));
 					    
@@ -244,14 +246,82 @@ private class thehandler implements ActionListener {
 								if(e.getSource() == Updateinfo){
 									JFrame frame4 = new JFrame("Update Info");
 									JPanel panel4 = new JPanel();
-									JTextField cid = new JTextField("Enter cid");
-									JTextField name = new JTextField("Enter Customer name");
-									JTextField phone = new JTextField("Enter phone");
-									JTextField sAddress = new JTextField("Enter Address");
-									JTextField pCode = new JTextField("Enter postalcode");
-									JTextField email = new JTextField("Enter email");
+									
+									
+									
+									 JLabel myLabel1 = new JLabel("Enter Your CustomerID");
+										JTextField cid = new JTextField();
+									    panel4.add(myLabel1,BorderLayout.WEST);
+									    panel4.add(cid,BorderLayout.CENTER);
+									
+
+										    JLabel myLabel2 = new JLabel("Enter Your name");
+											JTextField name = new JTextField();
+										    panel4.add(myLabel2,BorderLayout.WEST);
+										    panel4.add(name,BorderLayout.CENTER);
+									
+										   
+								    JLabel myLabel3 = new JLabel("Enter Your phone");
+								    JTextField phone = new JTextField();
+								    panel4.add(myLabel3,BorderLayout.WEST);
+								    panel4.add(phone,BorderLayout.CENTER);
+							
+									
+
+									 JLabel myLabel4 = new JLabel("Enter Your StreetAddress");
+										JTextField sAddress = new JTextField();
+									    panel4.add(myLabel4,BorderLayout.WEST);
+									    panel4.add(sAddress,BorderLayout.CENTER);
+									
+									    JLabel myLabel5 = new JLabel("Enter Your Postalcode");
+										JTextField pCode = new JTextField();
+									    panel4.add(myLabel5,BorderLayout.WEST);
+									    panel4.add(pCode,BorderLayout.CENTER);
+									
+									
+									    JLabel myLabel6 = new JLabel("Enter Your Email");
+									    JTextField email = new JTextField();
+									    panel4.add(myLabel6,BorderLayout.WEST);
+									    panel4.add(email,BorderLayout.CENTER);
+									
+									
+									
+									
+									
 									JButton Done = new JButton("Done");
 
+									
+									panel4.setLayout(new BoxLayout(panel4,BoxLayout.Y_AXIS));
+
+									panel4.add(BorderLayout.AFTER_LAST_LINE, Done);
+									frame4.add(panel4);
+									frame4.setSize(300, 300);
+									frame4.setVisible(true);
+
+									//DOING DONE BUTTON NOW
+									Done.addActionListener(new ActionListener(){
+										@Override
+										public void actionPerformed(ActionEvent e) {
+											//if (e.getSource() == Done){
+											try{
+												int cid1 =Integer.parseInt(cid.getText());	
+												String Address = sAddress.getText();
+												String pc = pCode.getText();
+												String emailA = email.getText();
+												}
+											catch (NumberFormatException ne) {
+												JOptionPane.showMessageDialog(null, "Could not parse: " + ne.getMessage());
+											}
+											int cid1 =Integer.parseInt(cid.getText());	
+											String phone1 = phone.getText();
+											String name1 = name.getText();
+											String saddress1 = sAddress.getText();
+											String pCode1 = pCode.getText();
+											String emailA = email.getText();
+											if(pCode1.isEmpty()){
+												JOptionPane.showMessageDialog(null, "Please Enter a Postal Code");
+
+											}
 											
 											String email1 = email.getText();
 											String answer = instance.Updatecustomer(name1, phone1, saddress1, pCode1, emailA,cid1);
@@ -266,7 +336,8 @@ private class thehandler implements ActionListener {
 			
 						
 				//delete button
-				     deleteclass.addActionListener(new ActionListener(){
+					//delete class button
+				 deleteclass.addActionListener(new ActionListener(){
 						 @Override
  
 				   public void actionPerformed(ActionEvent e) {
@@ -277,55 +348,50 @@ private class thehandler implements ActionListener {
 
 						    
 						   
+							 JLabel myLabel1 = new JLabel("Enter Your CustomerID");
+								JTextField cid2 = new JTextField();
+								cid2.setColumns(10);
+
+								panel12.add(myLabel1,BorderLayout.WEST);
+							    panel12.add(cid2,BorderLayout.CENTER);
+							    
+							    JLabel myLabel2 = new JLabel("Enter the classid you want to quit");
+							    JTextField clid2 = new JTextField();
+								clid2.setColumns(10);
+
+							    panel12.add(myLabel2,BorderLayout.WEST);
+							    panel12.add(clid2,BorderLayout.CENTER);
 							
-							JTextField cid = new JTextField("Enter cid");
-							
-						    JTextField clid = new JTextField("Enter classid");
 						   
 							JButton Delete = new JButton("Delete");
+							panel12.add(BorderLayout.AFTER_LAST_LINE, Delete);
+							frame12.add(panel12);
+							frame12.setSize(500, 500);
+							frame12.setVisible(true);
+							 
 							
-							try{
-								int cid1 =Integer.parseInt(cid.getText());	
-							    int clid1 = Integer.parseInt(clid.getText());}
-							    
-                                 
-							    
-							catch (Exception e1) {
-								
-							    System.out.println("Try Again!");
-								JOptionPane.showMessageDialog(null, "Try Again!Wrong Input");
-							}
-							int cid1 =Integer.parseInt(cid.getText());	
-						   // panel4.add(cid);
-						   panel4.add(cid);
-							panel4.add(clid);
-						    panel4.setLayout(new BoxLayout(panel4,BoxLayout.Y_AXIS));
-						    
-							panel4.add(BorderLayout.AFTER_LAST_LINE, Delete);
-							frame4.add(panel4);
-							frame4.setSize(300, 300);
-							frame4.setVisible(true); 
-						    
-							Delete.addActionListener(new ActionListener(){
+		
+				   
+			 Delete.addActionListener(new ActionListener(){
 
-								public void actionPerformed(ActionEvent e3) {
-										// TODO Auto-generated method stub JFrame frame2 = new JFrame("Signup Form");
-									    if(e.getSource() == Delete){	
-									    	String answer = instance.deleteCustomer(cid1, clid1);
-											JOptionPane.showMessageDialog(null, answer);
-
+				public void actionPerformed(ActionEvent e66) {
+					int cid1 =Integer.parseInt(cid2.getText());	
+				    int clid1 = Integer.parseInt(clid2.getText());
+				    	String answer = instance.deleteCustomer(cid1, clid1);
+						JOptionPane.showMessageDialog(null, answer);
+ }});}});
 					 
-									    }}});}
+									
 					 
 				 
-					});
+					};
 
 					 		
 				
 				 
 				 
 				 }}};
-}}
+}
 							    
 				       
 						
