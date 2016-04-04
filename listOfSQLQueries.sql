@@ -8,6 +8,7 @@ This query is simple and self explanatory
  */
 SELECT * FROM employee WHERE name = ?;
 
+
 /*
 Employee Selection/Projection query
 This query is built up in java based on user choices and is quite complex. It allows a user to select
@@ -69,3 +70,32 @@ WHERE NOT EXISTS (
       AND c.CustomerID = b.CustomerID
     )
 )
+
+
+
+/*UPDATE operation with CHECK constraint
+Using this customers can update their own customer info. They can update their info
+provided they maintain the CHECK constraint of postal code and phone number.They have to provide
+correct inpur in all the fields or there will be error popups.*/
+update Customer set name = ?,phoneNumber = ?,streetAddress = ?,"
+  + "postalCode = ?,emailAddress = ? where customerID = ? ;
+
+/*Delete Operation ON-CASCADE-DELETE
+Customers can quit classes by deleting their record from CustomerTakesClass
+with their classid and customerid*/
+delete from CustomerTakesClass where customerID = ? and classid = ? ;
+
+/* SELECT,INSERT Operation
+Customers signup to customers table if they dont already have an account using this query.
+If they already exist in the database they cannot signup again.They have to login with their customer id.*/
+SELECT customerID from Customer WHERE customerID = ?
+
+INSERT INTO Customer(customerID, name, phoneNumber, streetaddress, postalcode,emailAddress )
+  VALUES (?, ?, ?, ?, ?, ?);
+
+
+
+
+
+
+
