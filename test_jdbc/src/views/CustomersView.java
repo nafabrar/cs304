@@ -379,17 +379,17 @@ private class thehandler implements ActionListener {
 			 Delete.addActionListener(new ActionListener(){
 
 				public void actionPerformed(ActionEvent e66) {
-					
+					  if(cid2.getText().isEmpty() ||clid2.getText().isEmpty()){ 
+							JOptionPane.showMessageDialog(null, "Please Enter Proper CustomerID and "
+									+ "CLass ID");
+
+					    	return;
+					    
+					    }
 			
 					int cid1 =Integer.parseInt(cid2.getText());	
 				    int clid1 = Integer.parseInt(clid2.getText());
-				    if(cid2.getText().isEmpty() ||clid2.getText().isEmpty()){ 
-						JOptionPane.showMessageDialog(null, "Please Enter Proper CustomerID and "
-								+ "CLass ID");
-
-				    	return;
-				    
-				    }
+				  
 				    	String answer = instance.deleteCustomer(cid1, clid1);
 				    	
 				
